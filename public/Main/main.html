@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Joyce Beauty Salon - لوحة التحكم</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/Main/main.css">
+</head>
+<body>
+  <div class="bg-decoration"></div>
+  
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="brand">
+        <div class="logo-wrapper">
+          <img src="/assets/1.jpeg" alt="Joyce Salon Logo" class="logo" />
+        </div>
+        <div class="brand-text">
+          <h1>💅 Joyce Beauty</h1>
+          <p class="tagline">✨ مركز التجميل والعناية بالبشرة — لوحة التحكم الذكية</p>
+        </div>
+      </div>
+
+      <nav class="top-actions" aria-label="أجراءات أعلى الصفحة">
+        <button id="openSearch" class="icon-btn search">
+          <span>🔍</span>
+          بحث سريع
+        </button>
+        <a id="logoutLink" href="/login/login.html" class="icon-btn logout">
+          <span>🚪</span>
+          تسجيل خروج
+        </a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="welcome-section">
+      <div class="welcome-content">
+        <h2>مرحباً في لوحة التحكم 💖</h2>
+        <p class="lead">اختاري القسم الذي تريدين إدارته من الأقسام أدناه</p>
+      </div>
+      <div class="user-info" id="userInfo">
+        <div class="user-avatar">👤</div>
+        <div class="user-details">
+          <strong id="userName">المستخدمة</strong>
+          <span id="userRole" class="role-badge">الدور</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="cards-grid" id="cardsGrid" aria-label="قائمة الأقسام">
+      <!-- الحسابات -->
+      <a class="card" href="/accounts/accounts.html" data-keywords="حسابات موظفات مستخدمين صلاحيات">
+        <div class="card-icon" style="background: linear-gradient(135deg, #e91e63 0%, #f06292 100%)">
+          <span>👥</span>
+        </div>
+        <div class="card-content">
+          <h3>إدارة الحسابات</h3>
+          <p class="small">إضافة وتعديل حسابات الموظفات والصلاحيات</p>
+        </div>
+        <div class="card-arrow">←</div>
+      </a>
+
+      <!-- الشيفتات -->
+      <a class="card" href="/shifts/shifts.html" data-keywords="شيفت وردية مواعيد جدول">
+        <div class="card-icon" style="background: linear-gradient(135deg, #9c27b0 0%, #ba68c8 100%)">
+          <span>⏰</span>
+        </div>
+        <div class="card-content">
+          <h3>إدارة الشيفتات</h3>
+          <p class="small">جدولة الورديات وحساب الأرباح اليومية</p>
+        </div>
+        <div class="card-arrow">←</div>
+      </a>
+
+      <!-- الخدمات -->
+      <a class="card" href="/services/services.html" data-keywords="خدمات علاجات أسعار">
+        <div class="card-icon" style="background: linear-gradient(135deg, #ff4081 0%, #ff80ab 100%)">
+          <span>💆‍♀️</span>
+        </div>
+        <div class="card-content">
+          <h3>الخدمات والعلاجات</h3>
+          <p class="small">قائمة الخدمات، الأسعار، والمدة الزمنية</p>
+        </div>
+        <div class="card-arrow">←</div>
+      </a>
+
+      <!-- العروض -->
+      <a class="card" href="/offers/offers.html" data-keywords="عروض تخفيضات كوبونات">
+        <div class="card-icon" style="background: linear-gradient(135deg, #f06292 0%, #f8bbd0 100%)">
+          <span>🏷️</span>
+        </div>
+        <div class="card-content">
+          <h3>العروض الخاصة</h3>
+          <p class="small">إدارة العروض، التخفيضات، والكوبونات</p>
+        </div>
+        <div class="card-arrow">←</div>
+      </a>
+
+      <!-- العملاء -->
+      <a class="card" href="/bookings/clients.html" data-keywords="عملاء زبائن سجل">
+        <div class="card-icon" style="background: linear-gradient(135deg, #ab47bc 0%, #ce93d8 100%)">
+          <span>📇</span>
+        </div>
+        <div class="card-content">
+          <h3>إدارة العملاء</h3>
+          <p class="small">ملفات العميلات وسجل الزيارات والعلاجات</p>
+        </div>
+        <div class="card-arrow">←</div>
+      </a>
+
+      <!-- الحجوزات -->
+      <a class="card" href="/bk/bk.html" data-keywords="حجز موعد تاريخ">
+        <div class="card-icon" style="background: linear-gradient(135deg, #ec407a 0%, #f48fb1 100%)">
+          <span>📅</span>
+        </div>
+        <div class="card-content">
+          <h3>الحجوزات والمواعيد</h3>
+          <p class="small">إنشاء، تعديل، وإلغاء حجوزات العميلات</p>
+        </div>
+        <div class="card-arrow">←</div>
+      </a>
+
+      <!-- الدكتورة -->
+      <a class="card" href="/doctorspace/doctorspace.html" data-keywords="دكتور طبيب علاج">
+        <div class="card-icon" style="background: linear-gradient(135deg, #8e24aa 0%, #ab47bc 100%)">
+          <span>👩‍⚕️</span>
+        </div>
+        <div class="card-content">
+          <h3>لوحة الأطباء</h3>
+          <p class="small">لوحة خاصة بالطبيبات والمتخصصات</p>
+        </div>
+        <div class="card-arrow">←</div>
+      </a>
+
+      <!-- المحاسبة -->
+      <a class="card" href="/accountant/accountant.html" data-keywords="محاسبة مالية تقارير">
+        <div class="card-icon" style="background: linear-gradient(135deg, #d81b60 0%, #f06292 100%)">
+          <span>💰</span>
+        </div>
+        <div class="card-content">
+          <h3>المحاسبة</h3>
+          <p class="small">التقارير المالية وإدارة الإيرادات اليومية</p>
+        </div>
+        <div class="card-arrow">←</div>
+      </a>
+
+      <!-- الأدمن -->
+      <a class="card" href="/admin/admin.html" data-keywords="ادمن اعدادات نظام">
+        <div class="card-icon" style="background: linear-gradient(135deg, #7b1fa2 0%, #9c27b0 100%)">
+          <span>👑</span>
+        </div>
+        <div class="card-content">
+          <h3>إعدادات الأدمن</h3>
+          <p class="small">إعدادات النظام وصلاحيات المستخدمات</p>
+        </div>
+        <div class="card-arrow">←</div>
+      </a>
+
+      <!-- المخزون -->
+      <a class="card" href="/inventory/inventory.html" data-keywords="مخزون منتجات ادوات">
+        <div class="card-icon" style="background: linear-gradient(135deg, #c2185b 0%, #e91e63 100%)">
+          <span>📦</span>
+        </div>
+        <div class="card-content">
+          <h3>المخزون</h3>
+          <p class="small">إدارة المنتجات والأدوات والمستلزمات</p>
+        </div>
+        <div class="card-arrow">←</div>
+      </a>
+    </section>
+
+    <footer class="page-footer">
+      <div class="footer-content">
+        <p>By Abdullah Taher</p>
+        <small>© 2025 Joyce Beauty Salon — جميع الحقوق محفوظة</small>
+      </div>
+    </footer>
+  </main>
+
+  <!-- نافذة بحث -->
+  <div id="searchModal" class="modal" aria-hidden="true">
+    <div class="modal-backdrop"></div>
+    <div class="modal-inner">
+      <button id="closeSearch" class="close-btn">✖</button>
+      <div class="search-header">
+        <h3>🔍 بحث سريع عن الأقسام</h3>
+        <p class="hint">ابحثي عن أي قسم تريدين الوصول إليه بسرعة</p>
+      </div>
+      <input id="searchInput" type="search" placeholder="مثال: حجوزات، خدمات، عملاء..." autocomplete="off" />
+      <div id="searchResults" class="search-results"></div>
+    </div>
+  </div>
+
+  <script src="/Main/main.js"></script>
+</body>
+</html>

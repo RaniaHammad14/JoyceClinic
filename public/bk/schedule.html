@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>جدول المواعيد - Joyce Beauty Salon</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/bk/schedule.css">
+</head>
+<body>
+  <div class="bg-decoration"></div>
+  
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="brand">
+        <div class="logo-wrapper">
+          <img src="/assets/1.jpeg" alt="Joyce Logo" class="logo" />
+        </div>
+        <div class="brand-text">
+          <h1>💅 Joyce Beauty </h1>
+          <p class="tagline">جدول المواعيد</p>
+        </div>
+      </div>
+
+      <nav class="top-actions">
+        <a href="/bk/bk.html" class="icon-btn back">
+          <span>◀️</span>
+          رجوع للحجوزات
+        </a>
+        <a href="/Main/main.html" class="icon-btn">
+          <span>🏠</span>
+          الرئيسية
+        </a>
+        <button id="logoutBtn" class="icon-btn logout">
+          <span>🚪</span>
+          تسجيل خروج
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- Doctor Info Section -->
+    <section class="doctor-info-section">
+      <div class="doctor-header-card">
+        <div class="doctor-avatar-large" id="doctorAvatar">👩‍⚕️</div>
+        <div class="doctor-details-large">
+          <h2 id="doctorName">اسم الدكتورة</h2>
+          <span class="doctor-specialty" id="doctorRole">التخصص</span>
+          <div class="doctor-contact">
+            <span>📱</span>
+            <span id="doctorPhone" style="direction: ltr; display: inline-block">----</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Date and Add Booking Section -->
+    <section class="controls-section">
+      <div class="date-card">
+        <div class="date-header">
+          <h3>📅 اختاري التاريخ</h3>
+        </div>
+        <div class="date-controls">
+          <button class="date-nav-btn" id="prevDayBtn">◀️</button>
+          <input type="date" id="dateInput" class="date-input" />
+          <button class="date-nav-btn" id="nextDayBtn">▶️</button>
+        </div>
+        <div class="selected-date-display">
+          <span class="date-day" id="selectedDay">الأحد</span>
+          <span class="date-full" id="selectedDate">1 يناير 2025</span>
+        </div>
+      </div>
+      
+
+<div class="action-buttons">
+  <button class="add-booking-btn" id="addBookingBtn">
+    <span>➕</span>
+    إضافة حجز جديد
+  </button>
+  <button class="available-times-btn" id="availableTimesBtn">
+    <span>🕐</span>
+    المواعيد المتاحة
+  </button>
+  <button class="cancelled-bookings-btn" id="cancelledBookingsBtn">
+    <span>🗑️</span>
+    الحجوزات الملغاة
+  </button>
+</div>
+<button id="manualRefreshBtn" class="btn btn-info" style="margin-left: 10px;">
+  <span>🔄</span>
+  تحديث يدوي
+</button>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats-section">
+      <div class="stat-card">
+        <div class="stat-icon">📊</div>
+        <div class="stat-content">
+          <span class="stat-label">إجمالي الحجوزات</span>
+          <span class="stat-value" id="totalBookings">0</span>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">⏳</div>
+        <div class="stat-content">
+          <span class="stat-label">جاري</span>
+          <span class="stat-value pending" id="pendingBookings">0</span>
+        </div>
+      </div>
+      <div class="stats-card" style="background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);">
+  <div class="stat-icon">⚠️</div>
+  <div class="stat-info">
+    <div class="stat-value" id="unpaidBookings">0</div>
+    <div class="stat-label">خدمات غير مدفوعة</div>
+  </div>
+</div>
+      <div class="stat-card">
+        <div class="stat-icon">✅</div>
+        <div class="stat-content">
+          <span class="stat-label">مؤكد</span>
+          <span class="stat-value confirmed" id="confirmedBookings">0</span>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">▶️</div>
+        <div class="stat-content">
+          <span class="stat-label">بدأت</span>
+          <span class="stat-value started" id="startedBookings">0</span>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">✔️</div>
+        <div class="stat-content">
+          <span class="stat-label">انتهت</span>
+          <span class="stat-value completed" id="completedBookings">0</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Bookings Cards Section -->
+    <section class="bookings-section">
+      <div class="section-header">
+        <h3>📋 الحجوزات اليوم</h3>
+      </div>
+      <div id="bookingsGrid" class="bookings-grid">
+        <!-- الحجوزات هنا -->
+      </div>
+      <div id="emptyState" class="empty-state" style="display: none;">
+        <div class="empty-icon">📭</div>
+        <p>لا توجد حجوزات في هذا اليوم</p>
+        <button class="btn btn-primary" onclick="document.getElementById('addBookingBtn').click()">
+          <span>➕</span>
+          أضف أول حجز
+        </button>
+      </div>
+    </section>
+
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="loading-overlay" style="display: none;">
+      <div class="loader"></div>
+      <p>جاري التحميل...</p>
+    </div>
+
+    <footer class="page-footer">
+      <div class="footer-content">
+        <p>By Abdullah Taher</p>
+        <small>© 2025 Joyce Beauty Salon — جميع الحقوق محفوظة</small>
+      </div>
+    </footer>
+  </main>
+
+  <!-- Booking Details Modal -->
+  <div id="bookingDetailsModal" class="modal"></div>
+
+  <!-- Add Booking Modal -->
+  <div id="addBookingModal" class="modal"></div>
+
+  <!-- Charge Balance Modal -->
+  <div id="chargeBalanceModal" class="modal"></div>
+
+  <script src="/bk/schedule.js"></script>
+</body>
+</html>

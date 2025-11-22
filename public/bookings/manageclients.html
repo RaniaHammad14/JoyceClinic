@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>إدارة العملاء - Joyce Beauty Salon</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/bookings/manageclients.css">
+</head>
+<body>
+  <div class="bg-decoration"></div>
+  
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="brand">
+        <div class="logo-wrapper">
+          <img src="/assets/1.jpeg" alt="Joyce Salon Logo" class="logo" />
+        </div>
+        <div class="brand-text">
+          <h1>💅 Joyce Beauty </h1>
+          <p class="tagline">✨ إدارة العملاء الحاليين</p>
+        </div>
+      </div>
+
+      <nav class="top-actions">
+        <button id="refreshBtn" class="icon-btn">
+          <span>🔄</span>
+          تحديث
+        </button>
+        <a href="/bookings/clients.html" class="icon-btn">
+          <span>↩️</span>
+          رجوع
+        </a>
+        <a href="/Main/main.html" class="icon-btn">
+          <span>🏠</span>
+          الرئيسية
+        </a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="controls-section">
+      <div class="search-box">
+        <span class="search-icon">🔍</span>
+        <input 
+          type="search" 
+          id="searchInput" 
+          placeholder="ابحث عن عميل بالاسم أو رقم الهاتف..." 
+          autocomplete="off"
+        />
+      </div>
+
+      <div class="stats-row">
+        <div class="stat-card">
+          <div class="stat-icon">👥</div>
+          <div class="stat-content">
+            <span class="stat-label">إجمالي العملاء</span>
+            <span class="stat-value" id="totalClients">0</span>
+          </div>
+        </div>
+        
+        <div class="stat-card">
+          <div class="stat-icon">💰</div>
+          <div class="stat-content">
+            <span class="stat-label">إجمالي الأرصدة</span>
+            <span class="stat-value" id="totalBalances">0.00 ج</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="table-section">
+      <div class="table-header">
+        <h2>📋 قائمة العملاء</h2>
+        <a href="/bookings/addnewclient.html" class="btn-add">
+          <span>➕</span>
+          إضافة عميل جديد
+        </a>
+      </div>
+
+      <div id="loadingSpinner" class="loading-spinner">
+        <div class="spinner"></div>
+        <p>جاري تحميل البيانات...</p>
+      </div>
+
+      <div class="table-wrapper">
+        <div id="clientsGrid" class="clients-grid">
+          <!-- سيتم ملء البيانات هنا -->
+        </div>
+      </div>
+
+      <div id="emptyState" class="empty-state" style="display: none;">
+        <div class="empty-icon">📭</div>
+        <h3>لا يوجد عملاء مسجلين</h3>
+        <p>ابدأ بإضافة عميل جديد من الزر أعلاه</p>
+      </div>
+    </section>
+
+    <footer class="page-footer">
+      <div class="footer-content">
+        <p>By Abdullah Taher</p>
+        <small>© 2025 Joyce Beauty Salon — جميع الحقوق محفوظة</small>
+      </div>
+    </footer>
+  </main>
+
+  <script src="/bookings/manageclients.js"></script>
+</body>
+</html>

@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>الحجوزات الملغاة - Joyce Beauty </title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/bk/schedule.css">
+  <style>
+
+    .date-filter-section {
+  margin-bottom: 24px;
+}
+
+.date-filter-card {
+  background: white;
+  padding: 24px;
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(233, 30, 99, 0.12);
+  border: 2px solid var(--border);
+}
+
+.filter-header {
+  margin-bottom: 20px;
+}
+
+.filter-header h3 {
+  margin: 0;
+  font-size: 20px;
+  color: var(--text-dark);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.filter-controls {
+  display: grid;
+  grid-template-columns: 1fr 1fr auto auto;
+  gap: 16px;
+  align-items: end;
+}
+
+@media (max-width: 768px) {
+  .filter-controls {
+    grid-template-columns: 1fr;
+  }
+}
+    .cancelled-badge {
+      background: linear-gradient(135deg, #f44336 0%, #e91e63 100%);
+      color: white;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-weight: 600;
+      font-size: 14px;
+      display: inline-block;
+      margin-bottom: 12px;
+    }
+    
+    .restore-btn {
+      background: linear-gradient(135deg, #4caf50 0%, #66bb6a 100%);
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-family: 'Cairo', sans-serif;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .restore-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 16px rgba(76, 175, 80, 0.3);
+    }
+    
+    .delete-permanent-btn {
+      background: linear-gradient(135deg, #f44336 0%, #ef5350 100%);
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-family: 'Cairo', sans-serif;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .delete-permanent-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 16px rgba(244, 67, 54, 0.3);
+    }
+    /* تنسيق قسم تغيير الدكتور */
+#doctorSelectSection {
+  transition: all 0.3s ease;
+}
+
+#changeDoctorCheckbox {
+  cursor: pointer;
+  accent-color: #3b82f6;
+}
+
+#changeDoctorCheckbox:checked + div strong {
+  color: #1e40af;
+}
+
+.form-control {
+  font-family: 'Cairo', sans-serif;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+  </style>
+</head>
+<body>
+  <div class="bg-decoration"></div>
+  
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="brand">
+        <div class="logo-wrapper">
+          <img src="/assets/1.jpeg" alt="Joyce Logo" class="logo" />
+        </div>
+        <div class="brand-text">
+          <h1>💅 Joyce Beauty </h1>
+          <p class="tagline">الحجوزات الملغاة</p>
+        </div>
+      </div>
+
+      <nav class="top-actions">
+        <a href="/bk/schedule.html" class="icon-btn back">
+          <span>◀️</span>
+          رجوع للجدول
+        </a>
+        <a href="/Main/main.html" class="icon-btn">
+          <span>🏠</span>
+          الرئيسية
+        </a>
+        <button id="logoutBtn" class="icon-btn logout">
+          <span>🚪</span>
+          تسجيل خروج
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="doctor-info-section">
+      <div class="doctor-header-card">
+        <div class="doctor-avatar-large" id="doctorAvatar">👩‍⚕️</div>
+        <div class="doctor-details-large">
+          <h2 id="doctorName">اسم الدكتورة</h2>
+          <span class="doctor-specialty" id="doctorRole">التخصص</span>
+        </div>
+      </div>
+    </section>
+
+<section class="date-filter-section">
+  <div class="date-filter-card">
+    <div class="filter-header">
+      <h3>📅 فلترة حسب التاريخ</h3>
+    </div>
+    <div class="filter-controls">
+      <div class="form-group">
+        <label>من تاريخ:</label>
+        <input type="date" id="filterStartDate" class="date-input">
+      </div>
+      <div class="form-group">
+        <label>إلى تاريخ:</label>
+        <input type="date" id="filterEndDate" class="date-input">
+      </div>
+      <button class="btn btn-primary" id="applyFilterBtn">
+        <span>🔍</span>
+        بحث
+      </button>
+      <button class="btn btn-secondary" id="clearFilterBtn">
+        <span>🔄</span>
+        إعادة تعيين
+      </button>
+    </div>
+  </div>
+</section>
+
+<section class="bookings-section">
+  <div class="section-header">
+    <h3>🗑️ الحجوزات الملغاة</h3>
+  </div>
+      <div id="cancelledBookingsGrid" class="bookings-grid">
+        <!-- الحجوزات الملغاة هنا -->
+      </div>
+      <div id="emptyState" class="empty-state" style="display: none;">
+        <div class="empty-icon">✨</div>
+        <p>لا توجد حجوزات ملغاة</p>
+      </div>
+    </section>
+
+    <div id="loadingOverlay" class="loading-overlay" style="display: none;">
+      <div class="loader"></div>
+      <p>جاري التحميل...</p>
+    </div>
+
+    <footer class="page-footer">
+      <div class="footer-content">
+        <p>By Abdullah Taher</p>
+        <small>© 2025 Joyce Beauty Salon — جميع الحقوق محفوظة</small>
+      </div>
+    </footer>
+  </main>
+
+  <!-- Reschedule Modal -->
+  <div id="rescheduleModal" class="modal"></div>
+
+  <script src="/bk/cancelled.js"></script>
+</body>
+</html>

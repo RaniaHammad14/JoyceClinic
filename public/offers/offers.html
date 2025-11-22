@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Joyce Beauty Salon - إدارة العروض</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/offers/offers.css">
+</head>
+<body>
+  <div class="bg-decoration"></div>
+  
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="brand">
+        <div class="logo-wrapper">
+          <img src="/assets/1.jpeg" alt="Joyce Salon Logo" class="logo" />
+        </div>
+        <div class="brand-text">
+          <h1>💅 Joyce Beauty </h1>
+          <p class="tagline">إدارة العروض الخاصة</p>
+        </div>
+      </div>
+
+      <nav class="top-actions">
+        <a href="/Main/main.html" class="icon-btn">
+          <span>🏠</span>
+          الرئيسية
+        </a>
+        <button id="logoutBtn" class="icon-btn logout">
+          <span>🚪</span>
+          تسجيل خروج
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="page-header">
+      <div class="header-content">
+        <h2>🏷️ إدارة العروض الخاصة</h2>
+        <p class="lead">إنشاء وإدارة عروض الجلسات والأسعار الخاصة</p>
+      </div>
+    </section>
+
+    <!-- نموذج إضافة عرض جديد -->
+    <section class="form-section">
+      <div class="section-header">
+        <h3>➕ إضافة عرض جديد</h3>
+      </div>
+
+      <form id="offerForm">
+        <!-- نوع العرض -->
+        <div class="form-row">
+          <div class="form-group">
+            <label for="offerType">نوع العرض *</label>
+            <select id="offerType" required>
+              <option value="">-- اختاري نوع العرض --</option>
+              <option value="sessions">عرض جلسات</option>
+              <option value="price">عرض سعر</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="offerName">اسم العرض *</label>
+            <input type="text" id="offerName" placeholder="مثال: عرض الصيف" required />
+          </div>
+        </div>
+
+        <!-- عدد الخدمات -->
+        <div class="form-row" id="servicesCountRow" style="display: none;">
+          <div class="form-group">
+            <label for="servicesCount">عدد الخدمات في العرض *</label>
+            <select id="servicesCount">
+              <option value="1">خدمة واحدة</option>
+              <option value="2">خدمتين</option>
+              <option value="3">3 خدمات</option>
+              <option value="4">4 خدمات</option>
+              <option value="5">5 خدمات</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- كروت الخدمات -->
+        <div id="servicesCards" style="display: none;">
+          <h4 style="margin: 24px 0 16px; color: var(--primary);">📋 الخدمات المضمنة في العرض</h4>
+          <div id="servicesCardsContainer"></div>
+        </div>
+
+        <!-- معلومات عرض الجلسات -->
+        <div id="sessionsInfo" style="display: none;">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="sessionsCount">عدد الجلسات لكل خدمة *</label>
+              <input type="number" id="sessionsCount" min="1" placeholder="مثال: 10" />
+            </div>
+
+            <div class="form-group">
+              <label>إجمالي السعر بدون عرض</label>
+              <input type="text" id="totalOriginalPrice" readonly placeholder="سيتم الحساب تلقائياً" />
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="offerPrice">سعر العرض *</label>
+              <input type="number" id="offerPrice" step="0.01" min="0" placeholder="السعر بعد الخصم" />
+            </div>
+
+            <div class="form-group">
+              <label>نسبة الخصم</label>
+              <input type="text" id="discountPercentage" readonly placeholder="سيتم الحساب تلقائياً" />
+            </div>
+          </div>
+        </div>
+
+        <!-- مدة العرض -->
+        <div class="form-row" id="durationRow" style="display: none;">
+          <div class="form-group">
+            <label for="startDate">تاريخ بداية العرض *</label>
+            <input type="date" id="startDate" />
+          </div>
+
+          <div class="form-group">
+            <label for="endDate">تاريخ نهاية العرض *</label>
+            <input type="date" id="endDate" />
+          </div>
+        </div>
+
+        <!-- الحالة -->
+        <div class="form-row" id="statusRow" style="display: none;">
+          <div class="form-group">
+            <label for="offerStatus">حالة العرض *</label>
+            <select id="offerStatus">
+              <option value="active">نشط</option>
+              <option value="inactive">غير نشط</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="offerDescription">وصف العرض (اختياري)</label>
+            <input type="text" id="offerDescription" placeholder="وصف مختصر للعرض" />
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" class="btn-primary">
+            <span>💾</span>
+            حفظ العرض
+          </button>
+          <button type="button" id="resetForm" class="btn-secondary">
+            <span>🔄</span>
+            إعادة تعيين
+          </button>
+        </div>
+
+        <div id="offerMsg" class="message" style="display: none;"></div>
+      </form>
+    </section>
+
+    <!-- قائمة العروض -->
+    <section class="table-section">
+      <div class="section-header">
+        <h3>📋 قائمة العروض</h3>
+        <div class="filters">
+          <select id="filterStatus">
+            <option value="">كل العروض</option>
+            <option value="active">نشط</option>
+            <option value="inactive">غير نشط</option>
+            <option value="expired">منتهي</option>
+          </select>
+          <select id="filterType">
+            <option value="">كل الأنواع</option>
+            <option value="sessions">عروض جلسات</option>
+            <option value="price">عروض أسعار</option>
+          </select>
+        </div>
+      </div>
+
+      <div id="offersGrid" class="offers-grid">
+        <div class="loading-box">
+          <div class="loader"></div>
+          <p>جارٍ تحميل العروض...</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Modal تعديل العرض -->
+  <div id="editOfferModal" class="modal" aria-hidden="true">
+    <div class="modal-backdrop"></div>
+    <div class="modal-inner">
+      <button id="closeEditOffer" class="close-btn">✖</button>
+      <div class="modal-header">
+        <h3>✏️ تعديل العرض</h3>
+      </div>
+
+      <form id="editOfferForm">
+        <input type="hidden" id="editOfferId" />
+
+        <div class="form-group">
+          <label for="editOfferName">اسم العرض *</label>
+          <input type="text" id="editOfferName" required />
+        </div>
+
+        <div class="form-group">
+          <label for="editOfferPrice">السعر *</label>
+          <input type="number" id="editOfferPrice" step="0.01" min="0" required />
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="editStartDate">تاريخ البداية *</label>
+            <input type="date" id="editStartDate" required />
+          </div>
+
+          <div class="form-group">
+            <label for="editEndDate">تاريخ النهاية *</label>
+            <input type="date" id="editEndDate" required />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="editOfferStatus">الحالة *</label>
+          <select id="editOfferStatus" required>
+            <option value="active">نشط</option>
+            <option value="inactive">غير نشط</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="editOfferDescription">الوصف</label>
+          <input type="text" id="editOfferDescription" />
+        </div>
+
+        <div class="modal-actions">
+          <button type="submit" class="btn-primary">
+            <span>💾</span>
+            حفظ التعديلات
+          </button>
+          <button type="button" id="cancelEditOffer" class="btn-secondary">
+            إلغاء
+          </button>
+        </div>
+
+        <div id="editOfferMsg" class="message" style="display: none;"></div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal حذف العرض -->
+  <div id="deleteOfferModal" class="modal" aria-hidden="true">
+    <div class="modal-backdrop"></div>
+    <div class="modal-inner">
+      <button id="closeDeleteOffer" class="close-btn">✖</button>
+      <div class="modal-header">
+        <h3>🗑️ تأكيد الحذف</h3>
+      </div>
+
+      <div class="modal-body">
+        <p>هل أنتِ متأكدة من حذف العرض؟</p>
+        <p class="warning-text">⚠️ <strong id="deleteOfferName"></strong></p>
+        <p class="small-text">لن يمكن التراجع عن هذا الإجراء</p>
+      </div>
+
+      <div class="modal-actions">
+        <button id="confirmDeleteOffer" class="btn-danger">
+          <span>🗑️</span>
+          نعم، احذف
+        </button>
+        <button id="cancelDeleteOffer" class="btn-secondary">
+          إلغاء
+        </button>
+      </div>
+
+      <div id="deleteOfferMsg" class="message" style="display: none;"></div>
+    </div>
+  </div>
+
+  <script src="/offers/offers.js"></script>
+</body>
+</html>

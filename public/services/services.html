@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>إدارة الخدمات — Joyce Salon</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="services.css">
+</head>
+<body>
+  <div class="bg-decoration"></div>
+  
+  <header class="header">
+    <div class="header-inner">
+      <div class="brand">
+        <div class="logo-wrapper">
+          <img src="/assets/1.jpeg" alt="logo" class="logo">
+        </div>
+        <div class="brand-text">
+          <h1>💅 Joyce Beauty </h1>
+          <p class="subtitle">✨ إدارة الخدمات والأقسام</p>
+        </div>
+      </div>
+
+      <nav class="actions">
+        <a href="/Main/main.html" id="backBtn" class="btn ghost">
+          <span>⬅</span>
+          رجوع للوحة التحكم
+        </a>
+        <button id="logoutBtn" class="btn danger">
+          <span>🚪</span>
+          تسجيل خروج
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="main">
+    <!-- قسم إضافة قسم جديد -->
+    <section class="panel category-panel">
+      <div class="panel-header">
+        <h2>📂 الأقسام</h2>
+        <p class="panel-desc">إضافة وإدارة أقسام الخدمات</p>
+      </div>
+      
+      <form id="categoryForm" autocomplete="off">
+        <div class="form-group">
+          <label>
+            <span class="label-icon">📋</span>
+            اسم القسم الجديد
+          </label>
+          <input type="text" id="categoryName" name="categoryName" required placeholder="مثال: العناية بالبشرة">
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" class="btn primary">
+            <span>✨</span>
+            حفظ القسم
+          </button>
+          <button type="reset" class="btn ghost">
+            <span>🔄</span>
+            تفريغ
+          </button>
+        </div>
+
+        <div id="categoryMsg" class="msg" aria-live="polite"></div>
+      </form>
+
+      <!-- قائمة الأقسام -->
+      <div class="categories-list" id="categoriesList">
+        <h3>الأقسام الحالية:</h3>
+        <div class="categories-grid" id="categoriesGrid">
+          <div class="loading-box">
+            <div class="loader"></div>
+            <span>جارٍ التحميل...</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- قسم إضافة خدمة جديدة -->
+    <section class="panel service-panel">
+      <div class="panel-header">
+        <h2>💆‍♀️ الخدمات</h2>
+        <p class="panel-desc">إضافة وإدارة الخدمات المقدمة</p>
+      </div>
+      
+      <form id="serviceForm" autocomplete="off">
+        <div class="form-group">
+          <label>
+            <span class="label-icon">📂</span>
+            اختاري القسم
+          </label>
+          <select id="serviceCategory" name="serviceCategory" required>
+            <option value="">-- اختاري القسم --</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>
+            <span class="label-icon">✨</span>
+            اسم الخدمة
+          </label>
+          <input type="text" id="serviceName" name="serviceName" required placeholder="مثال: جلسة تنظيف بشرة">
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>
+              <span class="label-icon">⏱️</span>
+              المدة (بالدقائق)
+            </label>
+            <input type="number" id="serviceDuration" name="serviceDuration" required placeholder="مثال: 60" min="1">
+          </div>
+
+          <div class="form-group">
+            <label>
+              <span class="label-icon">💰</span>
+              السعر (جنيه مصري)
+            </label>
+            <input type="number" id="servicePrice" name="servicePrice" required placeholder="مثال: 250" min="0" step="0.01">
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" class="btn primary">
+            <span>💾</span>
+            حفظ الخدمة
+          </button>
+          <button type="reset" class="btn ghost">
+            <span>🔄</span>
+            تفريغ
+          </button>
+        </div>
+
+        <div id="serviceMsg" class="msg" aria-live="polite"></div>
+      </form>
+    </section>
+
+    <!-- قسم عرض الخدمات -->
+    <section class="panel services-list-panel">
+      <div class="panel-header">
+        <h2>📋 قائمة الخدمات</h2>
+        <p class="panel-desc">جميع الخدمات المتاحة في الصالون</p>
+      </div>
+
+      <!-- فلتر حسب القسم -->
+      <div class="filter-section">
+        <label for="filterCategory">
+          <span class="label-icon">🔍</span>
+          فلترة حسب القسم:
+        </label>
+        <select id="filterCategory" class="filter-select">
+          <option value="">الكل</option>
+        </select>
+      </div>
+
+      <div class="table-wrap">
+        <table id="servicesTable" class="services-table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>القسم</th>
+              <th>اسم الخدمة</th>
+              <th>المدة</th>
+              <th>السعر</th>
+              <th>الإجراءات</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td colspan="6" class="loading-cell">
+                <div class="loader"></div>
+                <span>جارٍ تحميل الخدمات...</span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div id="servicesMsg" class="msg" aria-live="polite"></div>
+    </section>
+  </main>
+
+  <!-- نافذة تعديل الخدمة -->
+  <div id="editServiceModal" class="modal" aria-hidden="true">
+    <div class="modal-backdrop"></div>
+    <div class="modal-inner">
+      <button id="closeEditService" class="close">✖</button>
+      <div class="modal-header">
+        <h3>✏️ تعديل الخدمة</h3>
+      </div>
+      
+      <form id="editServiceForm">
+        <input type="hidden" id="editServiceId">
+        
+        <div class="form-group">
+          <label>
+            <span class="label-icon">✨</span>
+            اسم الخدمة
+          </label>
+          <input type="text" id="editServiceName" required>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>
+              <span class="label-icon">⏱️</span>
+              المدة (دقيقة)
+            </label>
+            <input type="number" id="editServiceDuration" required min="1">
+          </div>
+
+          <div class="form-group">
+            <label>
+              <span class="label-icon">💰</span>
+              السعر (جنيه)
+            </label>
+            <input type="number" id="editServicePrice" required min="0" step="0.01">
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" class="btn primary">
+            <span>💾</span>
+            حفظ التعديلات
+          </button>
+          <button type="button" id="cancelEditService" class="btn ghost">
+            <span>✖</span>
+            إلغاء
+          </button>
+        </div>
+
+        <div id="editServiceMsg" class="msg" aria-live="polite"></div>
+      </form>
+    </div>
+  </div>
+
+  <!-- نافذة تأكيد حذف الخدمة -->
+  <div id="deleteServiceModal" class="modal" aria-hidden="true">
+    <div class="modal-backdrop"></div>
+    <div class="modal-inner delete-modal">
+      <button id="closeDeleteService" class="close">✖</button>
+      <div class="modal-header">
+        <h3>🗑️ تأكيد حذف الخدمة</h3>
+      </div>
+      
+      <div class="delete-content">
+        <div class="warning-icon">⚠️</div>
+        <p>هل أنت متأكدة من حذف خدمة <strong id="deleteServiceName"></strong>؟</p>
+        <p class="warning-text">هذا الإجراء لا يمكن التراجع عنه!</p>
+      </div>
+
+      <div class="form-actions">
+        <button id="confirmDeleteService" class="btn danger">
+          <span>🗑️</span>
+          نعم، احذف الخدمة
+        </button>
+        <button id="cancelDeleteService" class="btn ghost">
+          <span>✖</span>
+          إلغاء
+        </button>
+      </div>
+
+      <div id="deleteServiceMsg" class="msg" aria-live="polite"></div>
+    </div>
+  </div>
+
+  <!-- نافذة تأكيد حذف القسم -->
+  <div id="deleteCategoryModal" class="modal" aria-hidden="true">
+    <div class="modal-backdrop"></div>
+    <div class="modal-inner delete-modal">
+      <button id="closeDeleteCategory" class="close">✖</button>
+      <div class="modal-header">
+        <h3>🗑️ تأكيد حذف القسم</h3>
+      </div>
+      
+      <div class="delete-content">
+        <div class="warning-icon">⚠️</div>
+        <p>هل أنت متأكدة من حذف قسم <strong id="deleteCategoryName"></strong>؟</p>
+        <p class="warning-text">تحذير: سيتم حذف جميع الخدمات التابعة لهذا القسم!</p>
+      </div>
+
+      <div class="form-actions">
+        <button id="confirmDeleteCategory" class="btn danger">
+          <span>🗑️</span>
+          نعم، احذف القسم
+        </button>
+        <button id="cancelDeleteCategory" class="btn ghost">
+          <span>✖</span>
+          إلغاء
+        </button>
+      </div>
+
+      <div id="deleteCategoryMsg" class="msg" aria-live="polite"></div>
+    </div>
+  </div>
+
+  <script src="services.js"></script>
+</body>
+</html>

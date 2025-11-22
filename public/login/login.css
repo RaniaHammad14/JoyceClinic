@@ -1,0 +1,127 @@
+:root{
+  --bg1: #fff7fb;
+  --accent1: #ff9dbb; /* وردي فاتح */
+  --accent2: #ff6f91; /* وردي أقوى */
+  --muted: #8b8b8b;
+  --card-shadow: 0 8px 30px rgba(255,111,145,0.12);
+  --radius: 16px;
+  --glass: rgba(255,255,255,0.7);
+  font-family: "Cairo", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+}
+
+*{box-sizing:border-box}
+html,body{
+  height:100%;
+  margin:0;
+  background: linear-gradient(180deg, var(--bg1) 0%, #fff 50%);
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  color:#222;
+}
+
+.container{
+  min-height:100%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:28px;
+}
+
+/* البطاقة */
+.card{
+  width:100%;
+  max-width:420px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.95), #fff);
+  border-radius:var(--radius);
+  padding:24px;
+  box-shadow:var(--card-shadow);
+  border:1px solid rgba(255,111,145,0.06);
+}
+
+/* رأس الكارت */
+.card-header{ text-align:center; margin-bottom:14px; }
+.brand{
+  margin:0;
+  font-size:28px;
+  letter-spacing:1px;
+  color:var(--accent2);
+  font-weight:700;
+}
+.subtitle{
+  margin:6px 0 0;
+  font-size:13px;
+  color:var(--muted);
+}
+
+/* الفورم */
+.login-form{ display:flex; flex-direction:column; gap:12px; margin-top:8px; }
+
+.field { display:flex; flex-direction:column; gap:6px; }
+.label-text{ font-size:13px; color:#444; margin-right:6px; }
+
+input[type="tel"],
+input[type="password"]{
+  width:100%;
+  padding:12px 14px;
+  border-radius:12px;
+  border:1px solid rgba(0,0,0,0.06);
+  background: linear-gradient(180deg, rgba(255,255,255,0.65), rgba(255,255,255,0.9));
+  outline:none;
+  font-size:15px;
+  transition:box-shadow .18s, border-color .18s;
+  text-align:right;
+}
+
+input::placeholder{ color:#c6c6c6; }
+
+input:focus{
+  box-shadow: 0 4px 18px rgba(255,111,145,0.12);
+  border-color: var(--accent1);
+}
+
+/* زر اظهار كلمة المرور */
+.password-wrapper{ position:relative; display:flex; align-items:center; }
+.eye-btn{
+  position:absolute;
+  left:8px; /* لأن dir=rtl، اليسار يقابل أيقونة عرض */
+  background:transparent;
+  border:none;
+  cursor:pointer;
+  padding:6px;
+  font-size:16px;
+  line-height:1;
+}
+
+/* الازرار */
+.actions{ margin-top:6px; display:flex; gap:8px; }
+.btn{
+  flex:1;
+  padding:12px 16px;
+  border-radius:12px;
+  border: none;
+  cursor:pointer;
+  font-weight:600;
+  font-size:15px;
+}
+.btn.primary{
+  background: linear-gradient(90deg, var(--accent1), var(--accent2));
+  color:white;
+  box-shadow: 0 8px 20px rgba(255,111,145,0.18);
+}
+
+/* رسالة الحالة */
+.message{
+  margin-top:8px;
+  min-height:22px;
+  font-size:14px;
+  color:var(--muted);
+}
+
+/* تذييل */
+.card-footer{ margin-top:14px; text-align:center; color:#9a9a9a; font-size:12px; }
+
+/* responsiveness */
+@media (max-width:420px){
+  .card{ padding:18px; }
+  .brand{ font-size:22px; }
+}

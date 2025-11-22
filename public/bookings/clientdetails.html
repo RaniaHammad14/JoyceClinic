@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>تفاصيل العميل - Joyce Beauty Salon</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/bookings/clientdetails.css">
+</head>
+<body>
+  <div class="bg-decoration"></div>
+  
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="brand">
+        <div class="logo-wrapper">
+          <img src="/assets/1.jpeg" alt="Joyce Salon Logo" class="logo" />
+        </div>
+        <div class="brand-text">
+          <h1>💅 Joyce Beauty </h1>
+          <p class="tagline">✨ تفاصيل العميل</p>
+        </div>
+      </div>
+
+      <nav class="top-actions">
+        <a href="/bookings/manageclients.html" class="icon-btn">
+          <span>↩️</span>
+          رجوع
+        </a>
+        <a href="/Main/main.html" class="icon-btn">
+          <span>🏠</span>
+          الرئيسية
+        </a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- معلومات العميل الأساسية -->
+    <section class="client-header">
+      <div class="client-avatar">👤</div>
+      <div class="client-info">
+        <h2 id="clientName" class="client-name">...</h2>
+        <p id="clientPhone" class="client-phone">...</p>
+        <p class="client-id">
+          🆔 ID: <span id="clientId">...</span>
+          <button onclick="window.openEditIdModal()" class="edit-id-btn" title="تعديل ID">✏️</button>
+        </p>
+<div class="client-actions">
+  <button onclick="window.openEditPhoneModal()" class="action-btn action-btn-info">
+    <span>📱</span>
+    تعديل الهاتف الأساسي
+  </button>
+  <button onclick="window.openAddPhoneModal()" class="action-btn action-btn-info">
+    <span>➕</span>
+    إضافة رقم إضافي
+  </button>
+    <button onclick="window.openEditEmailModal()" class="action-btn action-btn-info">
+    <span>📧</span>
+    إضافة بريد إلكتروني
+  </button>
+  <button onclick="window.openTransferClientModal()" class="action-btn action-btn-success">
+    <span>💸</span>
+    تحويل لعميل آخر
+  </button>
+  <button onclick="window.openDeleteModal()" class="action-btn action-btn-danger">
+    <span>🗑️</span>
+    حذف العميل
+    </button>
+    </div>
+   </div>
+   <button class="btn btn-warning" onclick="openHistoricalChargeModal()">
+  <span>⏳</span>
+  شحن رصيد تاريخي
+</button>
+    </section>
+    <!-- نافذة إضافة رقم إضافي -->
+<div id="addPhoneModal" class="modal" aria-hidden="true">
+  <div class="modal-backdrop"></div>
+  <div class="modal-inner">
+    <button id="closeAddPhoneModal" class="close-btn">✖</button>
+    
+    <h2 style="margin: 0 0 24px; color: var(--success); text-align: center;">➕ إضافة رقم هاتف إضافي</h2>
+    
+    <div id="addPhoneMessage" class="message"></div>
+    
+    <form id="addPhoneForm">
+      <div class="form-group">
+        <label>رقم الهاتف الإضافي:</label>
+        <input type="text" id="additionalPhone" required maxlength="11" placeholder="01xxxxxxxxx">
+        <small style="color: var(--text-muted); font-size: 13px; display: block; margin-top: 6px;">
+          📱 يجب أن يكون 11 رقم ويبدأ بـ 01
+        </small>
+      </div>
+
+      <div class="form-group">
+        <label>نوع الرقم:</label>
+        <select id="phoneType" required>
+          <option value="إضافي">إضافي</option>
+          <option value="منزل">منزل</option>
+          <option value="عمل">عمل</option>
+          <option value="طوارئ">طوارئ</option>
+        </select>
+      </div>
+      
+      <div class="form-group">
+        <label>ملاحظات (اختياري):</label>
+        <input type="text" id="phoneNotes" placeholder="مثال: رقم الأم، رقم العمل...">
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary" style="background: linear-gradient(135deg, #4caf50 0%, #66bb6a 100%);">
+          <span>➕</span>
+          إضافة الرقم
+        </button>
+        <button type="button" id="cancelAddPhone" class="btn btn-secondary">
+          <span>✖</span>
+          إلغاء
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+<!-- Modal تعديل رقم إضافي -->
+<div class="modal" id="editAdditionalPhoneModal" aria-hidden="true">
+  <div class="modal-backdrop"></div>
+  <div class="modal-inner">
+    <button class="close-btn" id="closeEditAdditionalPhoneModal">✕</button>
+    <h2 style="margin: 0 0 24px; color: var(--primary); text-align: center;">✏️ تعديل رقم إضافي</h2>
+    
+    <div id="editAdditionalPhoneMessage" class="message" style="display: none;"></div>
+    
+    <form id="editAdditionalPhoneForm">
+      <input type="hidden" id="editAdditionalPhoneId">
+      
+      <div class="form-group">
+        <label for="editAdditionalPhone">رقم الهاتف <span class="required">*</span></label>
+        <input 
+          type="tel" 
+          id="editAdditionalPhone" 
+          placeholder="01xxxxxxxxx"
+          pattern="^01[0-9]{9}$"
+          maxlength="11"
+          required
+        >
+      </div>
+
+      <div class="form-group">
+        <label for="editAdditionalPhoneType">نوع الرقم</label>
+        <select id="editAdditionalPhoneType">
+          <option value="إضافي">إضافي</option>
+          <option value="منزل">منزل</option>
+          <option value="عمل">عمل</option>
+          <option value="طوارئ">طوارئ</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="editAdditionalPhoneNotes">ملاحظات</label>
+        <textarea 
+          id="editAdditionalPhoneNotes" 
+          rows="3" 
+          placeholder="أي ملاحظات إضافية (اختياري)"
+        ></textarea>
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary">
+          <span>✏️</span>
+          تحديث الرقم
+        </button>
+        <button type="button" class="btn btn-secondary" id="cancelEditAdditionalPhone">
+          <span>✖</span>
+          إلغاء
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+    <!-- التابات -->
+    <section class="tabs-section">
+      <div class="tabs-nav">
+        <button class="tab-btn active" data-tab="basic">
+          <span>📋</span>
+          الأساسي
+        </button>
+        <button class="tab-btn" data-tab="offers">
+          <span>🏷️</span>
+          العروض
+        </button>
+        <button class="tab-btn" data-tab="laser">
+          <span>✨</span>
+          ليزر
+        </button>
+        <button class="tab-btn" data-tab="skin">
+          <span>💆‍♀️</span>
+          بشرة
+        </button>
+        <button class="tab-btn" data-tab="transactions">
+          <span>💰</span>
+          التحويلات المالية
+        </button>
+        <button class="tab-btn" data-tab="bookings">
+  <span>📅</span>
+  الحجوزات
+</button>
+        <button class="tab-btn" data-tab="visits">
+          <span>🩺</span>
+          الزيارات
+        </button>
+      </div>
+
+      <div class="tabs-content">
+        <!-- تاب الأساسي -->
+        <div class="tab-panel active" data-tab="basic">
+          <div class="info-grid">
+            <div class="info-card">
+              <div class="info-icon">✍️</div>
+              <div class="info-content">
+                <span class="info-label">اسم العميل</span>
+                <span class="info-value" id="basicName">...</span>
+              </div>
+            </div>
+
+            <div class="info-card">
+              <div class="info-icon">📱</div>
+              <div class="info-content">
+                <span class="info-label">رقم الهاتف</span>
+                <span class="info-value" id="basicPhone">...</span>
+              </div>
+            </div>
+
+            <!-- الأرقام الإضافية -->
+<div id="additionalPhonesSection" style="grid-column: 1/-1; margin-top: 16px;">
+  <h4 style="margin: 0 0 12px; color: var(--primary); font-size: 18px; display: flex; align-items: center; gap: 8px;">
+    <span>📞</span>
+    الأرقام الإضافية
+  </h4>
+  <div id="additionalPhonesList" class="additional-phones-list">
+    <!-- سيتم ملء الأرقام هنا -->
+  </div>
+</div>
+
+            <div class="info-card">
+              <div class="info-icon">💵</div>
+              <div class="info-content">
+                <span class="info-label">الرصيد الأساسي</span>
+                <span class="info-value balance" id="basicBalance">0.00 ج</span>
+              </div>
+            </div>
+
+            <div class="info-card">
+              <div class="info-icon">📅</div>
+              <div class="info-content">
+                <span class="info-label">الرصيد القديم</span>
+                <span class="info-value balance" id="oldBalance">0.00 ج</span>
+              </div>
+            </div>
+          </div>
+          
+          <div class="balance-actions">
+            <button onclick="window.openChargeModal('رصيد أساسي')" class="action-btn action-btn-charge">
+              <span>💰</span>
+              شحن الرصيد الأساسي
+            </button>
+            <button onclick="window.openTransferModal('رصيد أساسي')" class="action-btn action-btn-transfer">
+              <span>💱</span>
+              تحويل الرصيد الأساسي
+            </button>
+            <button onclick="window.openTransferModal('رصيد قديم')" class="action-btn action-btn-transfer">
+              <span>💱</span>
+              تحويل الرصيد القديم
+            </button>
+          </div>
+        </div>
+
+<!-- تاب العروض -->
+<div class="tab-panel" data-tab="offers">
+  <div class="balance-display">
+    <div class="balance-icon">🏷️</div>
+    <div class="balance-info">
+      <span class="balance-label">رصيد العروض</span>
+      <span class="balance-amount" id="offersBalance">0.00 ج</span>
+    </div>
+  </div>
+  
+  <div class="balance-actions">
+    <button onclick="window.openTransferModal('رصيد عروض')" class="action-btn action-btn-transfer">
+      <span>💱</span>
+      تحويل رصيد العروض
+    </button>
+  </div>
+
+  <!-- ⭐ قسم العروض المشتراة ⭐ -->
+  <div class="purchased-offers-section" style="margin: 32px 0; padding: 24px; background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%); border-radius: 16px; border: 2px solid #3b82f6;">
+    <h3 style="margin: 0 0 20px; color: #1e40af; font-size: 22px; text-align: center; display: flex; align-items: center; justify-content: center; gap: 8px;">
+      <span>🎁</span>
+      العروض المشتراة
+    </h3>
+    
+    <div id="loadingPurchasedOffers" class="loading-spinner" style="display: none;">
+      <div class="spinner"></div>
+      <p>جاري تحميل العروض المشتراة...</p>
+    </div>
+
+    <div id="purchasedOffersGrid" class="offers-grid">
+      <!-- سيتم ملء العروض المشتراة هنا -->
+    </div>
+
+    <div id="emptyPurchasedOffers" class="empty-state" style="display: none;">
+      <div class="empty-icon">🎁</div>
+      <p>لم تشتري أي عروض بعد</p>
+    </div>
+  </div>
+
+  <!-- قسم العروض المتاحة للشراء -->
+  <div class="offers-section">
+    <h3 style="margin: 32px 0 20px; color: var(--primary); font-size: 22px; text-align: center;">
+      🛍️ العروض المتاحة للشراء
+    </h3>
+    
+    <div id="loadingOffers" class="loading-spinner">
+      <div class="spinner"></div>
+      <p>جاري تحميل العروض...</p>
+    </div>
+
+    <div id="offersGrid" class="offers-grid">
+      <!-- سيتم ملء العروض هنا -->
+    </div>
+
+    <div id="emptyOffers" class="empty-state" style="display: none;">
+      <div class="empty-icon">🎁</div>
+      <p>لا توجد عروض متاحة حالياً</p>
+    </div>
+  </div>
+</div>
+        <!-- تاب ليزر -->
+        <div class="tab-panel" data-tab="laser">
+          <div class="balance-display">
+            <div class="balance-icon">✨</div>
+            <div class="balance-info">
+              <span class="balance-label">رصيد ليزر</span>
+              <span class="balance-amount" id="laserBalance">0.00 ج</span>
+            </div>
+          </div>
+          
+          <div class="balance-actions">
+            <button onclick="window.openTransferModal('رصيد ليزر')" class="action-btn action-btn-transfer">
+              <span>💱</span>
+              تحويل رصيد الليزر
+            </button>
+          </div>
+        </div>
+
+        <!-- تاب بشرة -->
+        <div class="tab-panel" data-tab="skin">
+          <div class="balance-display">
+            <div class="balance-icon">💆‍♀️</div>
+            <div class="balance-info">
+              <span class="balance-label">رصيد البشرة</span>
+              <span class="balance-amount" id="skinBalance">0.00 ج</span>
+            </div>
+          </div>
+          
+          <div class="balance-actions">
+            <button onclick="window.openTransferModal('رصيد بشرة')" class="action-btn action-btn-transfer">
+              <span>💱</span>
+              تحويل رصيد البشرة
+            </button>
+          </div>
+        </div>
+        <!-- 🆕 تاب الحجوزات -->
+<div class="tab-panel" data-tab="bookings">
+  <div id="loadingBookings" style="display: block;">
+    <div class="loading-spinner">⏳ جاري التحميل...</div>
+  </div>
+  
+  <div id="bookingsContent" style="display: none;">
+    <div class="filters-section">
+      <h3>📅 فلتر حسب التاريخ</h3>
+      <div class="filters-grid">
+        <input type="date" id="filterBookingsStartDate">
+        <input type="date" id="filterBookingsEndDate">
+        <button onclick="filterBookings()" class="btn btn-primary">تطبيق</button>
+        <button onclick="clearBookingsFilters()" class="btn btn-secondary">مسح</button>
+      </div>
+    </div>
+
+    <div id="bookingsList"></div>
+    <div id="emptyBookings" style="display: none;">
+      <div class="empty-state">
+        <div class="empty-icon">📅</div>
+        <p>لا توجد حجوزات مسجلة</p>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- تاب الزيارات -->
+        <div class="tab-panel" data-tab="visits">
+          <div class="filter-section">
+            <div class="filter-group">
+              <label>فلتر بالتاريخ:</label>
+              <div class="date-filters">
+                <input type="date" id="filterVisitsStartDate" placeholder="من تاريخ">
+                <input type="date" id="filterVisitsEndDate" placeholder="إلى تاريخ">
+                <button onclick="window.filterVisits()" class="filter-btn">
+                  <span>🔍</span>
+                  بحث
+                </button>
+                <button onclick="window.clearVisitsFilters()" class="filter-btn filter-btn-secondary">
+                  <span>✖</span>
+                  مسح
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div id="loadingVisits" class="loading-spinner">
+            <div class="spinner"></div>
+            <p>جاري تحميل الزيارات...</p>
+          </div>
+
+          <div id="visitsContent" style="display: none;">
+            <div id="visitsList" class="visits-list">
+              <!-- سيتم ملء الزيارات هنا -->
+            </div>
+
+            <div id="emptyVisits" class="empty-state" style="display: none;">
+              <div class="empty-icon">📭</div>
+              <p>لا توجد زيارات مسجلة لهذا العميل</p>
+            </div>
+          </div>
+        </div>
+<!-- تاب التحويلات المالية -->
+<div class="tab-panel" data-tab="transactions">
+  <div class="filter-section">
+    <div class="filter-group">
+      <label>فلتر بالتاريخ:</label>
+      <div class="date-filters">
+        <input type="date" id="filterStartDate" placeholder="من تاريخ">
+        <input type="date" id="filterEndDate" placeholder="إلى تاريخ">
+        <button onclick="window.filterTransactions()" class="filter-btn">
+          <span>🔍</span>
+          بحث
+        </button>
+        <button onclick="window.clearFilters()" class="filter-btn filter-btn-secondary">
+          <span>✖</span>
+          مسح
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div id="loadingTransactions" class="loading-spinner">
+    <div class="spinner"></div>
+    <p>جاري تحميل المعاملات...</p>
+  </div>
+
+          <div id="transactionsContent" style="display: none;">
+            <div id="transactionsList" class="transactions-list">
+              <!-- سيتم ملء المعاملات هنا -->
+            </div>
+
+            <div id="emptyTransactions" class="empty-state" style="display: none;">
+              <div class="empty-icon">📭</div>
+              <p>لا توجد معاملات مسجلة لهذا العميل</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="page-footer">
+      <div class="footer-content">
+        <p>By Abdullah Taher</p>
+        <small>© 2025 Joyce Beauty Salon — جميع الحقوق محفوظة</small>
+      </div>
+    </footer>
+  </main>
+
+  <!-- نافذة شحن الرصيد -->
+  <div id="chargeModal" class="modal" aria-hidden="true">
+    <div class="modal-backdrop"></div>
+    <div class="modal-inner">
+      <button id="closeChargeModal" class="close-btn">✖</button>
+      
+      <h2 style="margin: 0 0 24px; color: var(--success); text-align: center;">💰 شحن رصيد</h2>
+      
+      <div id="chargeMessage" class="message"></div>
+      
+      <form id="chargeForm">
+        <div class="form-group">
+          <label>رقم ID العميل:</label>
+          <input type="number" id="chargeClientId" class="editable" required>
+          <small style="color: var(--text-muted); font-size: 13px; display: block; margin-top: 6px;">
+            💡 يمكنك تعديل رقم ID لشحن رصيد عميل آخر
+          </small>
+        </div>
+        
+        <div class="form-group">
+          <label>نوع الرصيد:</label>
+          <input type="text" id="chargeBalanceType" readonly style="background: #f5f5f5;">
+        </div>
+        
+        <div class="form-group">
+          <label>المبلغ:</label>
+          <input type="number" id="chargeAmount" step="0.01" min="0.01" required placeholder="0.00">
+        </div>
+        
+        <div class="form-group">
+          <label>طريقة الدفع:</label>
+          <select id="chargePaymentMethod" required>
+            <option value="">اختر طريقة الدفع</option>
+            <option value="نقدي">نقدي 💵</option>
+            <option value="محفظة">محفظة 📱</option>
+            <option value="فيزا">فيزا 💳</option>
+          </select>
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary" style="background: linear-gradient(135deg, #4caf50 0%, #66bb6a 100%);">
+            <span>💰</span>
+            شحن الرصيد
+          </button>
+          <button type="button" id="cancelCharge" class="btn btn-secondary">
+            <span>✖</span>
+            إلغاء
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- نافذة الطباعة -->
+  <div id="printModal" class="modal" aria-hidden="true">
+    <div class="modal-backdrop"></div>
+    <div class="modal-inner">
+      <button id="closePrintModal" class="close-btn">✖</button>
+      
+      <div id="printContent" class="print-content">
+        <!-- سيتم ملء محتوى الطباعة هنا -->
+      </div>
+
+      <div class="form-actions">
+        <button id="printBtn" class="btn btn-primary">
+          <span>🖨️</span>
+          طباعة
+        </button>
+        <button id="cancelPrint" class="btn btn-secondary">
+          <span>✖</span>
+          إلغاء
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- نافذة تحويل الرصيد بين الفئات -->
+  <div id="transferModal" class="modal" aria-hidden="true">
+    <div class="modal-backdrop"></div>
+    <div class="modal-inner">
+      <button id="closeTransferModal" class="close-btn">✖</button>
+      
+      <h2 style="margin: 0 0 24px; color: var(--primary); text-align: center;">💱 تحويل رصيد بين الفئات</h2>
+      
+      <div id="transferMessage" class="message"></div>
+      
+      <form id="transferForm">
+        <div class="form-group">
+          <label>من نوع الرصيد:</label>
+          <input type="text" id="transferFrom" readonly style="background: #f5f5f5;">
+        </div>
+        
+        <div class="form-group">
+          <label>إلى نوع الرصيد:</label>
+          <select id="transferTo" required>
+            <option value="">اختر نوع الرصيد</option>
+            <option value="رصيد أساسي">رصيد أساسي</option>
+            <option value="رصيد عروض">رصيد عروض</option>
+            <option value="رصيد ليزر">رصيد ليزر</option>
+            <option value="رصيد بشرة">رصيد بشرة</option>
+            <option value="رصيد قديم">رصيد قديم</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label>المبلغ:</label>
+          <input type="number" id="transferAmount" step="0.01" min="0.01" required placeholder="0.00">
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary">
+            <span>💱</span>
+            تحويل
+          </button>
+          <button type="button" id="cancelTransfer" class="btn btn-secondary">
+            <span>✖</span>
+            إلغاء
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- نافذة تحويل لعميل آخر -->
+  <div id="transferClientModal" class="modal" aria-hidden="true">
+    <div class="modal-backdrop"></div>
+    <div class="modal-inner">
+      <button id="closeTransferClientModal" class="close-btn">✖</button>
+      
+      <h2 style="margin: 0 0 24px; color: var(--primary); text-align: center;">💸 تحويل رصيد أساسي لعميل آخر</h2>
+      
+      <div id="transferClientMessage" class="message"></div>
+      
+      <form id="transferClientForm">
+        <div class="form-group">
+          <label>رقم هاتف العميل المستهدف:</label>
+          <input type="text" id="targetClientPhone" placeholder="01xxxxxxxxx" maxlength="11" required>
+        </div>
+        
+        <div class="form-group">
+          <label>المبلغ:</label>
+          <input type="number" id="transferClientAmount" step="0.01" min="0.01" required placeholder="0.00">
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary">
+            <span>💸</span>
+            تحويل
+          </button>
+          <button type="button" id="cancelTransferClient" class="btn btn-secondary">
+            <span>✖</span>
+            إلغاء
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- نافذة تعديل ID العميل -->
+  <div id="editIdModal" class="modal" aria-hidden="true">
+    <div class="modal-backdrop"></div>
+    <div class="modal-inner">
+      <button id="closeEditIdModal" class="close-btn">✖</button>
+      
+      <h2 style="margin: 0 0 24px; color: var(--secondary); text-align: center;">✏️ تعديل ID العميل</h2>
+      
+      <div id="editIdMessage" class="message"></div>
+      
+      <form id="editIdForm">
+        <div class="form-group">
+          <label>ID الحالي:</label>
+          <input type="number" id="currentIdDisplay" readonly style="background: #f5f5f5;">
+        </div>
+        
+        <div class="form-group">
+          <label>ID الجديد:</label>
+          <input type="number" id="newClientId" required min="1" placeholder="أدخل ID جديد">
+          <small style="color: var(--text-muted); font-size: 13px; display: block; margin-top: 6px;">
+            ⚠️ تأكد من أن ID الجديد غير مستخدم من قبل
+          </small>
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary" style="background: linear-gradient(135deg, #9c27b0 0%, #ba68c8 100%);">
+            <span>✏️</span>
+            تحديث ID
+          </button>
+          <button type="button" id="cancelEditId" class="btn btn-secondary">
+            <span>✖</span>
+            إلغاء
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- نافذة حذف العميل -->
+  <div id="deleteModal" class="modal" aria-hidden="true">
+    <div class="modal-backdrop"></div>
+    <div class="modal-inner">
+      <button id="closeDeleteModal" class="close-btn">✖</button>
+      
+      <h2 style="margin: 0 0 24px; color: var(--error); text-align: center;">⚠️ تحذير: حذف العميل</h2>
+      
+      <div class="delete-warning">
+        <p>🚨 هل أنت متأكد من حذف هذا العميل؟</p>
+        <small>سيتم حذف جميع بيانات العميل ومعاملاته بشكل نهائي ولا يمكن التراجع عن هذا الإجراء!</small>
+      </div>
+
+      <div class="form-actions">
+        <button id="confirmDelete" class="btn btn-primary" style="background: linear-gradient(135deg, #f44336 0%, #e57373 100%);">
+          <span>🗑️</span>
+          نعم، احذف
+        </button>
+        <button id="cancelDelete" class="btn btn-secondary">
+          <span>✖</span>
+          إلغاء
+        </button>
+      </div>
+    </div>
+  </div>
+
+<!-- نافذة تعديل الهاتف -->
+  <div id="editPhoneModal" class="modal" aria-hidden="true">
+    <div class="modal-backdrop"></div>
+    <div class="modal-inner">
+      <button id="closeEditPhoneModal" class="close-btn">✖</button>
+      
+      <h2 style="margin: 0 0 24px; color: var(--primary); text-align: center;">📱 تعديل رقم الهاتف</h2>
+      
+      <div id="editPhoneMessage" class="message"></div>
+      
+      <form id="editPhoneForm">
+        <div class="form-group">
+          <label>رقم الهاتف الحالي:</label>
+          <input type="text" id="currentPhone" readonly style="background: #f5f5f5;">
+        </div>
+        
+        <div class="form-group">
+          <label>رقم الهاتف الجديد:</label>
+          <input type="text" id="newPhone" required maxlength="11" placeholder="01xxxxxxxxx">
+          <small style="color: var(--text-muted); font-size: 13px; display: block; margin-top: 6px;">
+            📱 يجب أن يكون 11 رقم ويبدأ بـ 01
+          </small>
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary">
+            <span>📱</span>
+            تحديث الهاتف
+          </button>
+          <button type="button" id="cancelEditPhone" class="btn btn-secondary">
+            <span>✖</span>
+            إلغاء
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- نافذة إضافة البريد الإلكتروني -->
+  <div id="editEmailModal" class="modal" aria-hidden="true">
+    <div class="modal-backdrop"></div>
+    <div class="modal-inner">
+      <button id="closeEditEmailModal" class="close-btn">✖</button>
+      
+      <h2 style="margin: 0 0 24px; color: var(--primary); text-align: center;">📧 إضافة/تعديل البريد الإلكتروني</h2>
+      
+      <div id="editEmailMessage" class="message"></div>
+      
+      <form id="editEmailForm">
+        <div class="form-group">
+          <label>البريد الإلكتروني الحالي:</label>
+          <input type="email" id="currentEmail" readonly style="background: #f5f5f5;" placeholder="لا يوجد">
+        </div>
+        
+        <div class="form-group">
+          <label>البريد الإلكتروني الجديد:</label>
+          <input type="email" id="newEmail" required placeholder="example@email.com">
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary">
+            <span>📧</span>
+            حفظ البريد
+          </button>
+          <button type="button" id="cancelEditEmail" class="btn btn-secondary">
+            <span>✖</span>
+            إلغاء
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- نافذة شراء عرض -->
+  <div id="buyOfferModal" class="modal" aria-hidden="true">
+    <div class="modal-backdrop"></div>
+    <div class="modal-inner">
+      <button id="closeBuyOfferModal" class="close-btn">✖</button>
+      
+      <h2 style="margin: 0 0 24px; color: var(--success); text-align: center;">🛒 شراء عرض</h2>
+      
+      <div id="buyOfferMessage" class="message"></div>
+      
+      <div id="offerDetailsSection">
+        <!-- سيتم ملء تفاصيل العرض هنا -->
+      </div>
+      
+      <form id="buyOfferForm">
+        <input type="hidden" id="selectedOfferId">
+        
+        <div class="form-group">
+          <label>طريقة الدفع:</label>
+          <select id="offerPaymentMethod" required>
+            <option value="">اختر طريقة الدفع</option>
+            <option value="نقدي">نقدي 💵</option>
+            <option value="محفظة">محفظة 📱</option>
+            <option value="فيزا">فيزا 💳</option>
+          </select>
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary" style="background: linear-gradient(135deg, #4caf50 0%, #66bb6a 100%);">
+            <span>🛒</span>
+            تأكيد الشراء
+          </button>
+          <button type="button" id="cancelBuyOffer" class="btn btn-secondary">
+            <span>✖</span>
+            إلغاء
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <!-- Modal شحن الرصيد التاريخي -->
+<div id="historicalChargeModal" class="modal" aria-hidden="true">
+  <div class="modal-backdrop"></div>
+  <div class="modal-inner">
+    <button class="close-btn" id="closeHistoricalChargeModal">&times;</button>
+    <h2>⏳ شحن رصيد تاريخي</h2>
+    
+    <form id="historicalChargeForm">
+      <div class="form-group">
+        <label for="historicalBalanceType">نوع الرصيد *</label>
+        <select id="historicalBalanceType" required>
+          <option value="">اختر نوع الرصيد</option>
+          <option value="رصيد أساسي">رصيد أساسي</option>
+          <option value="رصيد عروض">رصيد عروض</option>
+          <option value="رصيد ليزر">رصيد ليزر</option>
+          <option value="رصيد جلدية">رصيد جلدية</option>
+          <option value="رصيد قديم">رصيد قديم</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="historicalChargeAmount">المبلغ *</label>
+        <input type="number" id="historicalChargeAmount" required placeholder="أدخل المبلغ" step="0.01" min="0.01">
+      </div>
+
+      <div class="form-group">
+        <label for="historicalChargeDate">تاريخ الشحن *</label>
+        <input type="datetime-local" id="historicalChargeDate" required>
+      </div>
+
+      <div class="form-group">
+        <label for="historicalChargeNotes">ملاحظات (اختياري)</label>
+        <textarea id="historicalChargeNotes" placeholder="أدخل ملاحظات إذا لزم الأمر" rows="3"></textarea>
+      </div>
+
+      <div id="historicalChargeMessage" class="message" style="display: none;"></div>
+
+      <div class="form-actions">
+        <button type="submit" class="btn btn-success">
+          <span>⏳</span>
+          شحن الرصيد التاريخي
+        </button>
+        <button type="button" class="btn btn-secondary" id="cancelHistoricalCharge">
+          إلغاء
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+  <script src="/bookings/clientdetails.js"></script>
+</body>
+</html>

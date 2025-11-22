@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>إدارة الشيفتات - Joyce Beauty Salon</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/shifts/shifts.css">
+</head>
+<body>
+  <div class="bg-decoration"></div>
+  
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="brand">
+        <img src="/assets/1.jpeg" alt="Joyce Salon" class="logo" />
+        <div>
+          <h1>⏰ إدارة الشيفتات</h1>
+          <p class="tagline">تتبع العمليات والإيرادات بدقة</p>
+        </div>
+      </div>
+      <nav class="top-actions">
+        <button id="todayReportBtn" class="icon-btn">
+          <span>📊</span>
+          تقرير اليوم
+        </button>
+        <button id="saveTreasuryReportBtn" class="icon-btn primary" style="background: linear-gradient(135deg, #4caf50 0%, #66bb6a 100%);">
+          <span>💾</span>
+          حفظ في الخزنة
+        </button>
+        <a href="/Main/main.html" class="icon-btn">
+          <span>🏠</span>
+          الرئيسية
+        </a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- قسم المستخدم والشيفت الحالي -->
+    <section class="user-section">
+      <div class="user-card">
+        <div class="user-avatar">👤</div>
+        <div class="user-details">
+          <strong id="userName">المستخدم</strong>
+          <span id="userRole" class="role-badge">الدور</span>
+        </div>
+      </div>
+      
+      <div id="shiftStatus" class="shift-status">
+        <div class="no-shift">
+          <div class="status-icon">⏰</div>
+          <h3>لا يوجد شيفت مفتوح</h3>
+          <p>ابدأ شيفت جديد لبدء تسجيل العمليات</p>
+          <div class="shift-type-buttons">
+            <button class="shift-btn morning" onclick="startShift('صباحي')">
+              <span>🌅</span>
+              بدء شيفت صباحي
+            </button>
+            <button class="shift-btn evening" onclick="startShift('مسائي')">
+              <span>🌆</span>
+              بدء شيفت مسائي
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- قسم الشيفت النشط -->
+    <section id="activeShiftSection" style="display: none;">
+      <!-- معلومات الشيفت -->
+      <div class="shift-header">
+        <div class="shift-info">
+          <h2>
+            <span id="shiftTypeIcon">🌅</span>
+            شيفت <span id="shiftTypeName">صباحي</span>
+          </h2>
+          <div class="shift-meta">
+            <span>🕐 بدأ: <strong id="shiftStartTime">--</strong></span>
+            <span>⏱️ المدة: <strong id="shiftDuration">--</strong></span>
+          </div>
+        </div>
+        <button id="closeShiftBtn" class="btn-danger">
+          <span>🔒</span>
+          إغلاق الشيفت
+        </button>
+      </div>
+
+      <!-- إحصائيات الشيفت -->
+      <div class="stats-grid">
+        <div class="stat-card cash">
+          <div class="stat-icon">💵</div>
+          <div class="stat-content">
+            <div class="stat-label">نقدي</div>
+            <div class="stat-value" id="totalCash">0.00 ج</div>
+          </div>
+        </div>
+        
+        <div class="stat-card wallet">
+          <div class="stat-icon">📱</div>
+          <div class="stat-content">
+            <div class="stat-label">محفظة</div>
+            <div class="stat-value" id="totalWallet">0.00 ج</div>
+          </div>
+        </div>
+        
+        <div class="stat-card visa">
+          <div class="stat-icon">💳</div>
+          <div class="stat-content">
+            <div class="stat-label">فيزا</div>
+            <div class="stat-value" id="totalVisa">0.00 ج</div>
+          </div>
+        </div>
+        
+        <div class="stat-card internal">
+          <div class="stat-icon">🔄</div>
+          <div class="stat-content">
+            <div class="stat-label">تحويل داخلي</div>
+            <div class="stat-value" id="totalInternal">0.00 ج</div>
+          </div>
+        </div>
+        
+        <div class="stat-card deductions">
+          <div class="stat-icon">➖</div>
+          <div class="stat-content">
+            <div class="stat-label">خصومات</div>
+            <div class="stat-value" id="totalDeductions">0.00 ج</div>
+          </div>
+        </div>
+        
+        <div class="stat-card total">
+          <div class="stat-icon">💰</div>
+          <div class="stat-content">
+            <div class="stat-label">الإجمالي</div>
+            <div class="stat-value" id="grandTotal">0.00 ج</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- سجل العمليات -->
+      <div class="operations-section">
+        <div class="section-header">
+          <h3>
+            <span>📝</span>
+            سجل العمليات
+          </h3>
+          <button id="refreshOpsBtn" class="icon-btn-sm">
+            <span>🔄</span>
+            تحديث
+          </button>
+        </div>
+        
+        <div id="operationsList" class="operations-list">
+          <div class="empty-ops">
+            <div class="empty-icon">📋</div>
+            <p>لا توجد عمليات بعد</p>
+            <small>جميع العمليات ستظهر هنا تلقائياً</small>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Modal إغلاق الشيفت -->
+  <div id="closeShiftModal" class="modal" aria-hidden="true">
+    <div class="modal-backdrop"></div>
+    <div class="modal-inner">
+      <button id="closeModalBtn" class="close-btn">✖</button>
+      
+      <div class="modal-header">
+        <div class="modal-icon">🔒</div>
+        <h3>إغلاق الشيفت</h3>
+      </div>
+      
+      <div class="shift-summary">
+        <h4>ملخص الشيفت</h4>
+        <div class="summary-grid">
+          <div class="summary-row">
+            <span>نقدي:</span>
+            <strong id="summCash">0.00 ج</strong>
+          </div>
+          <div class="summary-row">
+            <span>محفظة:</span>
+            <strong id="summWallet">0.00 ج</strong>
+          </div>
+          <div class="summary-row">
+            <span>فيزا:</span>
+            <strong id="summVisa">0.00 ج</strong>
+          </div>
+          <div class="summary-row">
+            <span>تحويل داخلي:</span>
+            <strong id="summInternal">0.00 ج</strong>
+          </div>
+          <div class="summary-row">
+            <span>خصومات:</span>
+            <strong id="summDeductions">0.00 ج</strong>
+          </div>
+          <div class="summary-row total">
+            <span>الإجمالي:</span>
+            <strong id="summTotal">0.00 ج</strong>
+          </div>
+        </div>
+      </div>
+      
+      <div class="form-group">
+        <label>ملاحظات (اختياري)</label>
+        <textarea id="closeNotes" rows="3" placeholder="أضف أي ملاحظات حول الشيفت..."></textarea>
+      </div>
+      
+      <div id="closeMessage" class="message" style="display: none;"></div>
+      
+      <div class="modal-actions">
+        <button id="cancelCloseBtn" class="btn-secondary">
+          <span>✖</span>
+          إلغاء
+        </button>
+        <button id="confirmCloseBtn" class="btn-danger">
+          <span>🔒</span>
+          إغلاق الشيفت
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal تقرير اليوم -->
+  <div id="todayReportModal" class="modal" aria-hidden="true">
+    <div class="modal-backdrop"></div>
+    <div class="modal-inner modal-large">
+      <button id="closeTodayModalBtn" class="close-btn">✖</button>
+      
+      <div class="modal-header">
+        <div class="modal-icon">📊</div>
+        <h3>تقرير شيفتات اليوم</h3>
+        <p class="modal-subtitle" id="todayDate">--</p>
+      </div>
+      
+      <div id="todayReportContent" class="today-report">
+        <div class="loading">⏳ جاري التحميل...</div>
+      </div>
+      
+      <div class="modal-actions">
+        <button id="printTodayBtn" class="btn-primary">
+          <span>🖨️</span>
+          طباعة التقرير
+        </button>
+        <button id="closeTodayBtn" class="btn-secondary">
+          <span>✖</span>
+          إغلاق
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal تفاصيل الشيفت -->
+  <div id="shiftDetailsModal" class="modal" aria-hidden="true">
+    <div class="modal-backdrop"></div>
+    <div class="modal-inner modal-large">
+      <button id="closeDetailsModalBtn" class="close-btn">✖</button>
+      
+      <div class="modal-header">
+        <div class="modal-icon">📄</div>
+        <h3>تفاصيل الشيفت</h3>
+      </div>
+      
+      <div id="shiftDetailsContent" class="shift-details-content">
+        <div class="loading">⏳ جاري التحميل...</div>
+      </div>
+      
+      <div class="modal-actions">
+        <button id="printShiftBtn" class="btn-primary">
+          <span>🖨️</span>
+          طباعة
+        </button>
+        <button id="closeDetailsBtn" class="btn-secondary">
+          <span>✖</span>
+          إغلاق
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script src="/shifts/shifts.js"></script>
+</body>
+</html>

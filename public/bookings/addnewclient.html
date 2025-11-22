@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>إضافة عميل جديد - Joyce Beauty Salon</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/bookings/addnewclient.css">
+</head>
+<body>
+  <div class="bg-decoration"></div>
+  
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="brand">
+        <div class="logo-wrapper">
+          <img src="/assets/1.jpeg" alt="Joyce Salon Logo" class="logo" />
+        </div>
+        <div class="brand-text">
+          <h1>💅 Joyce Beauty </h1>
+          <p class="tagline">✨ إضافة عميل جديد</p>
+        </div>
+      </div>
+
+      <nav class="top-actions">
+        <a href="/bookings/clients.html" class="icon-btn">
+          <span>↩️</span>
+          رجوع
+        </a>
+        <a href="/Main/main.html" class="icon-btn">
+          <span>🏠</span>
+          الرئيسية
+        </a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="form-section">
+      <div class="form-header">
+        <h2>👤 تسجيل عميل جديد</h2>
+        <p class="lead">املئي البيانات التالية لتسجيل عميل جديد في النظام</p>
+      </div>
+
+      <form id="addClientForm" class="client-form">
+        <!-- معلومات العميل الأساسية -->
+        <div class="form-group-header">
+          <h3>📋 المعلومات الأساسية</h3>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="clientName">
+              <span class="label-icon">✍️</span>
+              اسم العميل
+              <span class="required">*</span>
+            </label>
+            <input 
+              type="text" 
+              id="clientName" 
+              name="clientName" 
+              placeholder="مثال: فاطمة أحمد" 
+              required 
+              autocomplete="name"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="clientPhone">
+              <span class="label-icon">📱</span>
+              رقم الهاتف
+              <span class="required">*</span>
+            </label>
+            <input 
+              type="tel" 
+              id="clientPhone" 
+              name="clientPhone" 
+              placeholder="01028725687" 
+              maxlength="11"
+              pattern="01[0-9]{9}"
+              required 
+              autocomplete="tel"
+            />
+            <small class="field-hint">يجب أن يكون 11 رقم ويبدأ بـ 01</small>
+          </div>
+        </div>
+
+        <!-- شحن الرصيد -->
+        <div class="form-group-header">
+          <h3>💰 شحن الرصيد</h3>
+          <p class="section-note">جميع حقول الرصيد اختيارية - اتركيها فارغة إذا لم يتم الشحن</p>
+        </div>
+
+                <!-- طريقة الدفع -->
+        <div class="form-row">
+          <div class="form-group">
+            <label for="paymentMethod">
+              <span class="label-icon">💳</span>
+              طريقة الدفع
+            </label>
+            <select id="paymentMethod" name="paymentMethod" class="payment-select">
+              <option value="نقدي">💵 نقدي</option>
+              <option value="محفظة">📱 محفظة إلكترونية</option>
+              <option value="فيزا">💳 فيزا</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="balances-grid">
+          <div class="form-group">
+            <label for="balanceBasic">
+              <span class="label-icon">💵</span>
+              رصيد أساسي
+            </label>
+            <input 
+              type="number" 
+              id="balanceBasic" 
+              name="balanceBasic" 
+              placeholder="0.00" 
+              step="0.01"
+              min="0"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="balanceOffers">
+              <span class="label-icon">🏷️</span>
+              رصيد عروض
+            </label>
+            <input 
+              type="number" 
+              id="balanceOffers" 
+              name="balanceOffers" 
+              placeholder="0.00" 
+              step="0.01"
+              min="0"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="balanceLaser">
+              <span class="label-icon">✨</span>
+              رصيد ليزر
+            </label>
+            <input 
+              type="number" 
+              id="balanceLaser" 
+              name="balanceLaser" 
+              placeholder="0.00" 
+              step="0.01"
+              min="0"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="balanceSkin">
+              <span class="label-icon">💆‍♀️</span>
+              رصيد بشرة
+            </label>
+            <input 
+              type="number" 
+              id="balanceSkin" 
+              name="balanceSkin" 
+              placeholder="0.00" 
+              step="0.01"
+              min="0"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="balanceOld">
+              <span class="label-icon">📅</span>
+              رصيد قديم
+            </label>
+            <input 
+              type="number" 
+              id="balanceOld" 
+              name="balanceOld" 
+              placeholder="0.00" 
+              step="0.01"
+              min="0"
+            />
+          </div>
+        </div>
+
+        <!-- ملخص الرصيد الإجمالي -->
+        <div class="balance-summary">
+          <div class="summary-item">
+            <span class="summary-label">💎 إجمالي الرصيد المشحون:</span>
+            <span class="summary-value" id="totalBalance">0.00 جنيه</span>
+          </div>
+        </div>
+
+        <!-- أزرار الإجراءات -->
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary">
+            <span>💾</span>
+            حفظ العميل
+          </button>
+          <button type="reset" class="btn btn-secondary">
+            <span>🔄</span>
+            إعادة تعيين
+          </button>
+        </div>
+      </form>
+
+      <!-- رسالة النجاح/الخطأ -->
+      <div id="message" class="message" style="display: none;"></div>
+    </section>
+
+    <footer class="page-footer">
+      <div class="footer-content">
+        <p>By Abdullah Taher</p>
+        <small>© 2025 Joyce Beauty Salon — جميع الحقوق محفوظة</small>
+      </div>
+    </footer>
+  </main>
+
+  <script src="/bookings/addnewclient.js"></script>
+</body>
+</html>

@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>👑 إدارة الحسابات - لوحة الأدمن</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/admin/admin.css">
+</head>
+<body>
+  <!-- الخلفية الديكورية -->
+  <div class="bg-decoration"></div>
+
+  <!-- Header -->
+  <header class="admin-header">
+    <div class="header-content">
+      <div class="header-right">
+        <button id="backBtn" class="icon-btn">
+          <span>🔙</span>
+          <span>العودة للرئيسية</span>
+        </button>
+        <div class="page-title">
+          <h1>👑 لوحة تحكم الأدمن</h1>
+          <p>إدارة حسابات الموظفات والصلاحيات</p>
+        </div>
+      </div>
+      <div class="admin-info" id="adminInfo">
+        <div class="admin-avatar">👤</div>
+        <div class="admin-details">
+          <strong id="adminName">الأدمن</strong>
+          <span class="admin-badge">👑 أدمن</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="admin-container">
+    <!-- إحصائيات سريعة -->
+    <section class="stats-section">
+      <div class="stat-card" style="background: linear-gradient(135deg, #e91e63 0%, #ff4081 100%)">
+        <div class="stat-icon">👥</div>
+        <div class="stat-info">
+          <h3 id="totalAccounts">0</h3>
+          <p>إجمالي الحسابات</p>
+        </div>
+      </div>
+      <div class="stat-card" style="background: linear-gradient(135deg, #9c27b0 0%, #ba68c8 100%)">
+        <div class="stat-icon">👩‍⚕️</div>
+        <div class="stat-info">
+          <h3 id="totalDoctors">0</h3>
+          <p>الأطباء</p>
+        </div>
+      </div>
+      <div class="stat-card" style="background: linear-gradient(135deg, #ec407a 0%, #f48fb1 100%)">
+        <div class="stat-icon">📋</div>
+        <div class="stat-info">
+          <h3 id="totalReception">0</h3>
+          <p>موظفات الاستقبال</p>
+        </div>
+      </div>
+      <div class="stat-card" style="background: linear-gradient(135deg, #d81b60 0%, #f06292 100%)">
+        <div class="stat-icon">💰</div>
+        <div class="stat-info">
+          <h3 id="totalAccountants">0</h3>
+          <p>المحاسبين</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- فلتر البحث -->
+    <section class="filter-section">
+      <div class="search-box">
+        <span class="search-icon">🔍</span>
+        <input type="search" id="searchInput" placeholder="ابحث عن موظفة بالاسم أو رقم الهاتف...">
+      </div>
+      <div class="filter-buttons">
+        <button class="filter-btn active" data-filter="all">الكل</button>
+        <button class="filter-btn" data-filter="ادمن">👑 أدمن</button>
+        <button class="filter-btn" data-filter="دكتور">👩‍⚕️ دكتور</button>
+        <button class="filter-btn" data-filter="استقبال">📋 استقبال</button>
+        <button class="filter-btn" data-filter="محاسب">💰 محاسب</button>
+      </div>
+    </section>
+
+    <!-- قائمة الحسابات -->
+    <section class="accounts-section">
+      <div id="accountsList" class="accounts-grid">
+        <!-- سيتم ملؤها من JavaScript -->
+      </div>
+      <div id="noResults" class="no-results" style="display: none;">
+        <div class="no-results-icon">🔍</div>
+        <p>لم يتم العثور على نتائج</p>
+        <small>جرب البحث بكلمات أخرى أو غير الفلتر</small>
+      </div>
+      <div id="loadingSpinner" class="loading-spinner">
+        <div class="spinner"></div>
+        <p>جاري تحميل البيانات...</p>
+      </div>
+    </section>
+  </main>
+
+  <!-- نافذة التقارير الشهرية -->
+  <div id="reportsModal" class="modal" aria-hidden="true">
+    <div class="modal-backdrop"></div>
+    <div class="modal-content reports-modal">
+      <button class="close-modal" id="closeReportsModal">✖</button>
+      
+      <div class="modal-header">
+        <h2>📊 التقارير الشهرية</h2>
+        <p id="employeeName" class="employee-name"></p>
+      </div>
+
+      <div class="month-selector">
+        <label for="monthSelect">اختر الشهر:</label>
+        <input type="month" id="monthSelect" class="month-input">
+        <button id="loadReportBtn" class="primary-btn">
+          <span>📈</span>
+          <span>عرض التقرير</span>
+        </button>
+      </div>
+
+      <div id="reportContent" class="report-content">
+        <!-- إحصائيات الحجوزات -->
+        <div class="report-stats">
+          <div class="report-stat-card">
+            <div class="stat-icon">📅</div>
+            <div class="stat-details">
+              <h3 id="totalBookings">0</h3>
+              <p>إجمالي الحجوزات</p>
+            </div>
+          </div>
+          <div class="report-stat-card">
+            <div class="stat-icon">💰</div>
+            <div class="stat-details">
+              <h3 id="totalRevenue">0 ج</h3>
+              <p>إجمالي الإيرادات</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- حساب العمولة -->
+        <div class="commission-section">
+          <h3>💵 حساب العمولة</h3>
+          <div class="commission-calculator">
+            <div class="input-group">
+              <label for="commissionRate">النسبة المئوية (%):</label>
+              <input type="number" id="commissionRate" min="0" max="100" step="0.5" placeholder="مثال: 5">
+              <button id="calculateCommission" class="calculate-btn">احسب</button>
+            </div>
+            <div class="commission-result" id="commissionResult" style="display: none;">
+              <span class="result-label">العمولة المستحقة:</span>
+              <span class="result-value" id="commissionValue">0 ج</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- المرتب الثابت -->
+        <div class="salary-section">
+          <h3>💼 المرتب الثابت</h3>
+          <div class="salary-input-group">
+            <input type="number" id="fixedSalary" placeholder="أدخل المرتب الثابت" step="50">
+            <button id="saveSalary" class="save-btn">
+              <span>💾</span>
+              <span>حفظ المرتب</span>
+            </button>
+          </div>
+          <div class="salary-display" id="salaryDisplay" style="display: none;">
+            <span class="salary-label">المرتب المحفوظ:</span>
+            <span class="salary-value" id="savedSalaryValue">0 ج</span>
+          </div>
+        </div>
+
+        <!-- الراتب الإجمالي -->
+        <div class="total-salary-section" id="totalSalarySection" style="display: none;">
+          <h3>💎 الراتب الإجمالي</h3>
+          <div class="total-breakdown">
+            <div class="breakdown-item">
+              <span>المرتب الثابت:</span>
+              <span id="breakdownFixed">0 ج</span>
+            </div>
+            <div class="breakdown-item">
+              <span>العمولة:</span>
+              <span id="breakdownCommission">0 ج</span>
+            </div>
+            <div class="breakdown-divider"></div>
+            <div class="breakdown-item total">
+              <span>الإجمالي:</span>
+              <span id="breakdownTotal">0 ج</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- رسالة فارغة -->
+        <div id="emptyReport" class="empty-report">
+          <div class="empty-icon">📊</div>
+          <p>اختر شهراً لعرض التقرير</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="/admin/admin.js"></script>
+</body>
+</html>

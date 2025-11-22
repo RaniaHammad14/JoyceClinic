@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>إدارة المخزون - Joyce Beauty Salon</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/inventory/inventory.css">
+</head>
+<body>
+  <div class="bg-decoration"></div>
+  
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="brand">
+        <div class="logo-wrapper">
+          <img src="/assets/1.jpeg" alt="Joyce Salon Logo" class="logo" />
+        </div>
+        <div class="brand-text">
+          <h1>📦 إدارة المخزون</h1>
+          <p class="tagline">إدارة المنتجات والموردين</p>
+        </div>
+      </div>
+      <div class="header-actions">
+        <a href="/Main/main.html" class="btn-back">
+          <span>🏠</span>
+          العودة للرئيسية
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="welcome-section">
+      <div class="welcome-content">
+        <h2>مرحباً في إدارة المخزون 📦</h2>
+        <p class="lead">اختاري القسم الذي تريدين إدارته</p>
+      </div>
+      <div class="user-info" id="userInfo">
+        <div class="user-avatar">👤</div>
+        <div class="user-details">
+          <strong id="userName">المستخدمة</strong>
+          <span id="userRole" class="role-badge">الدور</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="inventory-cards">
+      <!-- كرت الموردين -->
+      <a href="/inventory/suppliers.html" class="inventory-card suppliers-card">
+        <div class="card-icon" style="background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%)">
+          <span>🏢</span>
+        </div>
+        <div class="card-content">
+          <h3>إدارة الموردين</h3>
+          <p class="description">إدارة بيانات الموردين، الحسابات، والمستحقات المالية</p>
+          <div class="card-stats">
+            <div class="stat-item">
+              <span class="stat-icon">👥</span>
+              <span class="stat-label">عدد الموردين</span>
+              <span class="stat-value" id="suppliersCount">-</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-icon">💰</span>
+              <span class="stat-label">المستحقات</span>
+              <span class="stat-value danger" id="totalDue">-</span>
+            </div>
+          </div>
+        </div>
+        <div class="card-arrow">←</div>
+      </a>
+
+      <!-- كرت المخزون -->
+      <a href="/inventory/stock.html" class="inventory-card stock-card">
+        <div class="card-icon" style="background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%)">
+          <span>📦</span>
+        </div>
+        <div class="card-content">
+          <h3>إدارة المخزون</h3>
+          <p class="description">إدارة المنتجات، الكميات، والحركات المخزنية</p>
+          <div class="card-stats">
+            <div class="stat-item">
+              <span class="stat-icon">📊</span>
+              <span class="stat-label">عدد المنتجات</span>
+              <span class="stat-value" id="productsCount">-</span>
+            </div>
+            <div class="stat-item warning">
+              <span class="stat-icon">⚠️</span>
+              <span class="stat-label">منتجات منخفضة</span>
+              <span class="stat-value" id="lowStockCount">-</span>
+            </div>
+          </div>
+        </div>
+        <div class="card-arrow">←</div>
+      </a>
+    </section>
+
+    <!-- ملخص سريع -->
+    <section class="quick-summary">
+      <h3>📊 ملخص سريع</h3>
+      <div class="summary-grid">
+        <div class="summary-card">
+          <div class="summary-icon" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%)">
+            <span>💵</span>
+          </div>
+          <div class="summary-content">
+            <p class="summary-label">إجمالي قيمة المخزون</p>
+            <h4 class="summary-value" id="totalInventoryValue">0.00 ج</h4>
+          </div>
+        </div>
+
+        <div class="summary-card">
+          <div class="summary-icon" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%)">
+            <span>📈</span>
+          </div>
+          <div class="summary-content">
+            <p class="summary-label">مشتريات هذا الشهر</p>
+            <h4 class="summary-value" id="monthlyPurchases">0.00 ج</h4>
+          </div>
+        </div>
+
+        <div class="summary-card">
+          <div class="summary-icon" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%)">
+            <span>🔄</span>
+          </div>
+          <div class="summary-content">
+            <p class="summary-label">آخر حركة مخزنية</p>
+            <h4 class="summary-value" id="lastMovement">-</h4>
+          </div>
+        </div>
+
+        <div class="summary-card">
+          <div class="summary-icon" style="background: linear-gradient(135deg, #30cfd0 0%, #330867 100%)">
+            <span>📉</span>
+          </div>
+          <div class="summary-content">
+            <p class="summary-label">منتجات تحتاج إعادة طلب</p>
+            <h4 class="summary-value danger" id="reorderCount">0</h4>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="page-footer">
+      <div class="footer-content">
+        <p>💖 نظام إدارة المخزون - Joyce Beauty Salon</p>
+        <small>© 2025 جميع الحقوق محفوظة</small>
+      </div>
+    </footer>
+  </main>
+
+  <script src="/inventory/inventory.js"></script>
+</body>
+</html>

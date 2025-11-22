@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>إدارة الموردين - Joyce Beauty Salon</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/inventory/suppliers.css">
+</head>
+<body>
+  <div class="bg-decoration"></div>
+  
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="brand">
+        <div class="logo-wrapper">
+          <img src="/assets/1.jpeg" alt="Joyce Salon Logo" class="logo" />
+        </div>
+        <div class="brand-text">
+          <h1>🏢 إدارة الموردين</h1>
+          <p class="tagline">إدارة شاملة للموردين والحسابات المالية</p>
+        </div>
+      </div>
+      <div class="header-actions">
+        <a href="/inventory/inventory.html" class="btn-back">
+          <span>←</span>
+          العودة للمخزون
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- الإحصائيات السريعة -->
+    <section class="stats-overview">
+      <div class="stat-card total">
+        <div class="stat-icon">👥</div>
+        <div class="stat-content">
+          <p class="stat-label">إجمالي الموردين</p>
+          <h3 class="stat-value" id="totalSuppliers">0</h3>
+        </div>
+      </div>
+      
+      <div class="stat-card danger">
+        <div class="stat-icon">💰</div>
+        <div class="stat-content">
+          <p class="stat-label">المستحقات علينا</p>
+          <h3 class="stat-value" id="totalDue">0.00 ج</h3>
+        </div>
+      </div>
+      
+      <div class="stat-card success">
+        <div class="stat-icon">💵</div>
+        <div class="stat-content">
+          <p class="stat-label">المدفوع هذا الشهر</p>
+          <h3 class="stat-value" id="monthlyPaid">0.00 ج</h3>
+        </div>
+      </div>
+      
+      <div class="stat-card warning">
+        <div class="stat-icon">📊</div>
+        <div class="stat-content">
+          <p class="stat-label">عدد الفواتير المعلقة</p>
+          <h3 class="stat-value" id="pendingInvoices">0</h3>
+        </div>
+      </div>
+    </section>
+
+    <!-- علامات التبويب -->
+    <div class="tabs-container">
+      <button class="tab-btn active" data-tab="suppliers">
+        <span>👥</span>
+        الموردين
+      </button>
+      <button class="tab-btn" data-tab="invoices">
+        <span>📄</span>
+        الفواتير
+      </button>
+      <button class="tab-btn" data-tab="payments">
+        <span>💳</span>
+        المدفوعات
+      </button>
+      <button class="tab-btn" data-tab="reports">
+        <span>📊</span>
+        التقارير
+      </button>
+    </div>
+
+    <!-- محتوى التبويبات -->
+    <div class="tab-content active" id="suppliers-tab">
+      <div class="section-header">
+        <h2>قائمة الموردين</h2>
+        <button class="btn-primary" id="addSupplierBtn">
+          <span>➕</span>
+          إضافة مورد جديد
+        </button>
+      </div>
+
+      <!-- بحث وفلترة -->
+      <div class="search-filter-bar">
+        <input type="text" id="searchSuppliers" placeholder="🔍 البحث عن مورد..." class="search-input">
+        <select id="filterSupplierStatus" class="filter-select">
+          <option value="all">جميع الموردين</option>
+          <option value="active">نشط</option>
+          <option value="inactive">غير نشط</option>
+        </select>
+        <select id="sortSuppliers" class="filter-select">
+          <option value="name">الترتيب حسب الاسم</option>
+          <option value="due">الترتيب حسب المستحقات</option>
+          <option value="recent">الأحدث أولاً</option>
+        </select>
+      </div>
+
+      <!-- جدول الموردين -->
+      <div class="table-container">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>الكود</th>
+              <th>اسم المورد</th>
+              <th>رقم الهاتف</th>
+              <th>العنوان</th>
+              <th>المستحقات</th>
+              <th>آخر معاملة</th>
+              <th>الحالة</th>
+              <th>الإجراءات</th>
+            </tr>
+          </thead>
+          <tbody id="suppliersTableBody">
+            <tr>
+              <td colspan="8" class="no-data">
+                <div class="no-data-message">
+                  <span class="no-data-icon">📦</span>
+                  <p>لا توجد موردين مسجلين</p>
+                  <small>قم بإضافة مورد جديد للبدء</small>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- تبويب الفواتير -->
+    <div class="tab-content" id="invoices-tab">
+      <div class="section-header">
+        <h2>فواتير الموردين</h2>
+        <button class="btn-primary" id="addInvoiceBtn">
+          <span>➕</span>
+          إضافة فاتورة
+        </button>
+      </div>
+
+      <!-- فلاتر الفواتير -->
+      <div class="search-filter-bar">
+        <input type="text" id="searchInvoices" placeholder="🔍 البحث في الفواتير..." class="search-input">
+        <select id="filterInvoiceStatus" class="filter-select">
+          <option value="all">جميع الفواتير</option>
+          <option value="pending">معلقة</option>
+          <option value="partial">مدفوعة جزئياً</option>
+          <option value="paid">مدفوعة بالكامل</option>
+        </select>
+        <input type="date" id="filterDateFrom" class="date-input" placeholder="من تاريخ">
+        <input type="date" id="filterDateTo" class="date-input" placeholder="إلى تاريخ">
+      </div>
+
+      <div class="table-container">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>رقم الفاتورة</th>
+              <th>المورد</th>
+              <th>التاريخ</th>
+              <th>المبلغ الإجمالي</th>
+              <th>المدفوع</th>
+              <th>المتبقي</th>
+              <th>الحالة</th>
+              <th>الإجراءات</th>
+            </tr>
+          </thead>
+          <tbody id="invoicesTableBody">
+            <tr>
+              <td colspan="8" class="no-data">
+                <div class="no-data-message">
+                  <span class="no-data-icon">📄</span>
+                  <p>لا توجد فواتير</p>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- تبويب المدفوعات -->
+    <div class="tab-content" id="payments-tab">
+      <div class="section-header">
+        <h2>سجل المدفوعات</h2>
+        <button class="btn-primary" id="addPaymentBtn">
+          <span>➕</span>
+          تسجيل دفعة
+        </button>
+      </div>
+
+      <div class="search-filter-bar">
+        <input type="text" id="searchPayments" placeholder="🔍 البحث في المدفوعات..." class="search-input">
+        <select id="filterPaymentMethod" class="filter-select">
+          <option value="all">جميع طرق الدفع</option>
+          <option value="cash">نقدي</option>
+          <option value="transfer">تحويل بنكي</option>
+          <option value="check">شيك</option>
+        </select>
+        <input type="date" id="filterPaymentDateFrom" class="date-input">
+        <input type="date" id="filterPaymentDateTo" class="date-input">
+      </div>
+
+      <div class="table-container">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>الرقم</th>
+              <th>المورد</th>
+              <th>الفاتورة</th>
+              <th>المبلغ</th>
+              <th>طريقة الدفع</th>
+              <th>التاريخ</th>
+              <th>ملاحظات</th>
+              <th>الإجراءات</th>
+            </tr>
+          </thead>
+          <tbody id="paymentsTableBody">
+            <tr>
+              <td colspan="8" class="no-data">
+                <div class="no-data-message">
+                  <span class="no-data-icon">💳</span>
+                  <p>لا توجد مدفوعات مسجلة</p>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- تبويب التقارير -->
+    <div class="tab-content" id="reports-tab">
+      <div class="section-header">
+        <h2>تقارير الموردين</h2>
+        <button class="btn-primary" id="generateReportBtn">
+          <span>📊</span>
+          إنشاء تقرير
+        </button>
+      </div>
+
+      <div class="reports-grid">
+        <div class="report-card">
+          <div class="report-icon">📈</div>
+          <h3>تقرير الموردين الشامل</h3>
+          <p>تقرير مفصل لجميع الموردين وحساباتهم</p>
+          <button class="btn-secondary" onclick="generateSupplierReport()">إنشاء التقرير</button>
+        </div>
+
+        <div class="report-card">
+          <div class="report-icon">💰</div>
+          <h3>تقرير المستحقات</h3>
+          <p>قائمة بالمستحقات على كل مورد</p>
+          <button class="btn-secondary" onclick="generateDueReport()">إنشاء التقرير</button>
+        </div>
+
+        <div class="report-card">
+          <div class="report-icon">📊</div>
+          <h3>تقرير المشتريات الشهري</h3>
+          <p>ملخص المشتريات والمدفوعات الشهرية</p>
+          <button class="btn-secondary" onclick="generateMonthlyReport()">إنشاء التقرير</button>
+        </div>
+
+        <div class="report-card">
+          <div class="report-icon">📉</div>
+          <h3>تقرير الموردين الأكثر تعاملاً</h3>
+          <p>ترتيب الموردين حسب حجم المعاملات</p>
+          <button class="btn-secondary" onclick="generateTopSuppliersReport()">إنشاء التقرير</button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Modal إضافة مورد -->
+  <div id="addSupplierModal" class="modal" aria-hidden="true">
+    <div class="modal-backdrop"></div>
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3>➕ إضافة مورد جديد</h3>
+        <button class="close-btn" onclick="closeModal('addSupplierModal')">✖</button>
+      </div>
+      <div class="modal-body">
+        <form id="addSupplierForm">
+          <div class="form-row">
+            <div class="form-group">
+              <label>اسم المورد <span class="required">*</span></label>
+              <input type="text" id="supplierName" required placeholder="أدخل اسم المورد">
+            </div>
+            <div class="form-group">
+              <label>رقم الهاتف <span class="required">*</span></label>
+              <input type="tel" id="supplierPhone" required placeholder="01XXXXXXXXX">
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label>البريد الإلكتروني</label>
+              <input type="email" id="supplierEmail" placeholder="email@example.com">
+            </div>
+            <div class="form-group">
+              <label>الشركة</label>
+              <input type="text" id="supplierCompany" placeholder="اسم الشركة">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>العنوان</label>
+            <textarea id="supplierAddress" rows="2" placeholder="عنوان المورد الكامل"></textarea>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label>الرصيد الافتتاحي</label>
+              <input type="number" id="supplierBalance" value="0" step="0.01" placeholder="0.00">
+            </div>
+            <div class="form-group">
+              <label>الحد الائتماني</label>
+              <input type="number" id="supplierCreditLimit" value="0" step="0.01" placeholder="0.00">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>ملاحظات</label>
+            <textarea id="supplierNotes" rows="3" placeholder="أي ملاحظات إضافية..."></textarea>
+          </div>
+
+          <div class="form-actions">
+            <button type="button" class="btn-secondary" onclick="closeModal('addSupplierModal')">إلغاء</button>
+            <button type="submit" class="btn-primary">حفظ المورد</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal إضافة فاتورة -->
+  <div id="addInvoiceModal" class="modal" aria-hidden="true">
+    <div class="modal-backdrop"></div>
+    <div class="modal-dialog large">
+      <div class="modal-header">
+        <h3>📄 إضافة فاتورة مورد</h3>
+        <button class="close-btn" onclick="closeModal('addInvoiceModal')">✖</button>
+      </div>
+      <div class="modal-body">
+        <form id="addInvoiceForm">
+          <div class="form-row">
+            <div class="form-group">
+              <label>المورد <span class="required">*</span></label>
+              <select id="invoiceSupplier" required>
+                <option value="">اختر المورد</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>رقم الفاتورة <span class="required">*</span></label>
+              <input type="text" id="invoiceNumber" required placeholder="INV-001">
+            </div>
+            <div class="form-group">
+              <label>تاريخ الفاتورة <span class="required">*</span></label>
+              <input type="date" id="invoiceDate" required>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label>المبلغ الإجمالي <span class="required">*</span></label>
+              <input type="number" id="invoiceAmount" required step="0.01" placeholder="0.00">
+            </div>
+            <div class="form-group">
+              <label>المبلغ المدفوع</label>
+              <input type="number" id="invoicePaid" value="0" step="0.01" placeholder="0.00">
+            </div>
+            <div class="form-group">
+              <label>تاريخ الاستحقاق</label>
+              <input type="date" id="invoiceDueDate">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>الوصف</label>
+            <textarea id="invoiceDescription" rows="3" placeholder="تفاصيل الفاتورة..."></textarea>
+          </div>
+
+          <div class="form-actions">
+            <button type="button" class="btn-secondary" onclick="closeModal('addInvoiceModal')">إلغاء</button>
+            <button type="submit" class="btn-primary">حفظ الفاتورة</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal إضافة دفعة -->
+  <div id="addPaymentModal" class="modal" aria-hidden="true">
+    <div class="modal-backdrop"></div>
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3>💳 تسجيل دفعة</h3>
+        <button class="close-btn" onclick="closeModal('addPaymentModal')">✖</button>
+      </div>
+      <div class="modal-body">
+        <form id="addPaymentForm">
+          <div class="form-group">
+            <label>المورد <span class="required">*</span></label>
+            <select id="paymentSupplier" required onchange="loadSupplierInvoices(this.value)">
+              <option value="">اختر المورد</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>الفاتورة <span class="required">*</span></label>
+            <select id="paymentInvoice" required>
+              <option value="">اختر الفاتورة</option>
+            </select>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label>المبلغ المدفوع <span class="required">*</span></label>
+              <input type="number" id="paymentAmount" required step="0.01" placeholder="0.00">
+            </div>
+            <div class="form-group">
+              <label>طريقة الدفع <span class="required">*</span></label>
+              <select id="paymentMethod" required>
+                <option value="">اختر طريقة الدفع</option>
+                <option value="cash">نقدي</option>
+                <option value="transfer">تحويل بنكي</option>
+                <option value="check">شيك</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>تاريخ الدفع <span class="required">*</span></label>
+            <input type="date" id="paymentDate" required>
+          </div>
+
+          <div class="form-group">
+            <label>رقم المرجع</label>
+            <input type="text" id="paymentReference" placeholder="رقم الشيك أو التحويل">
+          </div>
+
+          <div class="form-group">
+            <label>ملاحظات</label>
+            <textarea id="paymentNotes" rows="2" placeholder="أي ملاحظات..."></textarea>
+          </div>
+
+          <div class="form-actions">
+            <button type="button" class="btn-secondary" onclick="closeModal('addPaymentModal')">إلغاء</button>
+            <button type="submit" class="btn-primary">تسجيل الدفعة</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script src="/inventory/suppliers.js"></script>
+</body>
+</html>

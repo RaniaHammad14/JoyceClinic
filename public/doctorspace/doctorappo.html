@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>إدارة الجلسة - Joyce Beauty Salon</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/doctorspace/doctorappo.css">
+</head>
+<body>
+  <!-- Loading Overlay -->
+  <div id="loadingOverlay" class="loading-overlay">
+    <div class="loader"></div>
+    <p>جاري التحميل...</p>
+  </div>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="header-inner">
+      <button id="backBtn" class="back-btn">
+        <span>←</span>
+        رجوع
+      </button>
+      <h1>💊 إدارة الجلسة</h1>
+      <div class="header-actions">
+        <button id="saveAllBtn" class="btn-save-all">
+          <span>💾</span>
+          حفظ الجلسة
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- Two Column Layout -->
+    <div class="main-layout">
+      <!-- Right Side: Booking Info -->
+      <aside class="booking-info-panel">
+        <div class="panel-header">
+          <h2>📋 بيانات الحجز</h2>
+        </div>
+        
+        <div class="panel-body" id="bookingInfoContent">
+          <div class="info-loading">
+            <div class="loader-small"></div>
+            <p>جاري التحميل...</p>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Left Side: Services & Actions -->
+      <section class="services-panel">
+        <div class="panel-header">
+          <h2>⚕️ خدمات الجلسة</h2>
+          <button id="stockBtn" class="btn-stock">
+            <span>📦</span>
+            المخزون
+          </button>
+          <button id="addServiceBtn" class="btn-add-service">
+  <span>➕</span>
+  إضافة خدمة
+</button>
+        </div>
+        
+        <div class="panel-body">
+          <div id="servicesContainer" class="services-container"></div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <!-- Modal: Stock -->
+  <div id="stockModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>📦 اختيار من المخزون</h3>
+        <button class="modal-close" id="closeStockModal">&times;</button>
+      </div>
+      
+      <div class="modal-body">
+        <div class="form-group">
+          <label for="stockSearch">🔍 بحث عن منتج</label>
+          <input type="text" id="stockSearch" placeholder="ابحث بالاسم أو الباركود...">
+        </div>
+        
+        <div id="stockProductsList" class="products-list"></div>
+        
+        <div id="selectedStockItem" style="display: none; margin-top: 20px; padding: 16px; background: #f0f9ff; border-radius: 12px;">
+          <h4 style="color: #1e40af; margin-bottom: 12px;">المنتج المختار:</h4>
+          <div id="selectedItemInfo"></div>
+          
+          <div class="form-group" style="margin-top: 16px;">
+            <label for="stockQuantity">الكمية *</label>
+            <input type="number" id="stockQuantity" min="1" value="1">
+          </div>
+          
+          <button id="confirmStockBtn" class="btn btn-success" style="width: 100%; margin-top: 16px;">
+            <span>✅</span>
+            تأكيد الاستخدام
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Laser Details -->
+  <div id="laserModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>💫 تفاصيل جلسة الليزر</h3>
+        <button class="modal-close" id="closeLaserModal">&times;</button>
+      </div>
+      
+      <form id="laserForm" class="modal-body">
+        <input type="hidden" id="laserServiceId">
+        <input type="hidden" id="laserServiceName">
+        <input type="hidden" id="laserServiceIndex">
+        
+        <div class="form-row">
+          <div class="form-group">
+            <label>👤 الاسم</label>
+            <input type="text" id="laserClientName" readonly>
+          </div>
+          <div class="form-group">
+            <label>📱 رقم الهاتف</label>
+            <input type="text" id="laserClientPhone" readonly>
+          </div>
+        </div>
+        
+        <div class="form-row">
+          <div class="form-group">
+            <label>📅 التاريخ</label>
+            <input type="text" id="laserDate" readonly>
+          </div>
+          <div class="form-group">
+            <label>🕐 الوقت</label>
+            <input type="text" id="laserTime" readonly>
+          </div>
+        </div>
+        
+        <div class="form-row">
+          <div class="form-group">
+            <label for="laserSessionNumber">🔢 رقم الجلسة *</label>
+            <input type="number" id="laserSessionNumber" min="1" required>
+          </div>
+          <div class="form-group">
+            <label for="laserSessionType">📝 نوع الجلسة *</label>
+            <input type="text" id="laserSessionType" placeholder="مثال: إزالة شعر" required>
+          </div>
+        </div>
+        
+        <div class="form-row">
+          <div class="form-group">
+            <label for="laserPulses">⚡ عدد النبضات *</label>
+            <input type="number" id="laserPulses" min="1" required>
+          </div>
+          <div class="form-group">
+            <label for="laserPower">🔋 Power *</label>
+            <input type="number" id="laserPower" step="0.1" required>
+          </div>
+        </div>
+        
+        <div class="form-row">
+          <div class="form-group">
+            <label for="laserPulsDuration">⏱️ Pulse Duration *</label>
+            <input type="number" id="laserPulsDuration" step="0.1" required>
+          </div>
+          <div class="form-group">
+            <label for="laserSpotSize">📏 Spot Size *</label>
+            <input type="number" id="laserSpotSize" step="0.1" required>
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label for="laserSkinType">🎨 Skin Type *</label>
+          <select id="laserSkinType" required>
+            <option value="">اختر نوع البشرة</option>
+            <option value="Type I">Type I - Very Fair</option>
+            <option value="Type II">Type II - Fair</option>
+            <option value="Type III">Type III - Medium</option>
+            <option value="Type IV">Type IV - Olive</option>
+            <option value="Type V">Type V - Brown</option>
+            <option value="Type VI">Type VI - Dark Brown/Black</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label for="laserNotes">📝 ملاحظات إضافية</label>
+          <textarea id="laserNotes" rows="3" placeholder="أي ملاحظات على الجلسة..."></textarea>
+        </div>
+        
+        <button type="submit" class="btn btn-success" style="width: 100%;">
+          <span>💾</span>
+          حفظ التفاصيل
+        </button>
+      </form>
+    </div>
+  </div>
+  <!-- Modal: Add Extra Service -->
+<div id="addServiceModal" class="modal">
+  <div class="modal-content" style="max-width: 600px;">
+    <div class="modal-header">
+      <h3>➕ إضافة خدمة إضافية</h3>
+      <button class="modal-close" id="closeAddServiceModal">&times;</button>
+    </div>
+    
+    <form id="addServiceForm" class="modal-body">
+      <!-- رصيد العميل -->
+      <div id="clientBalanceInfo" class="client-balance-box"></div>
+      
+      <!-- القسم -->
+      <div class="form-group">
+        <label for="extraServiceCategory">🗂️ القسم *</label>
+        <select id="extraServiceCategory" required>
+          <option value="">اختر القسم</option>
+        </select>
+      </div>
+      
+      <!-- الخدمة -->
+      <div class="form-group">
+        <label for="extraService">⚕️ الخدمة *</label>
+        <select id="extraService" required disabled>
+          <option value="">اختر القسم أولاً</option>
+        </select>
+      </div>
+      
+      <!-- معلومات الخدمة -->
+      <div id="serviceInfoBox" style="display: none;" class="service-info-box">
+        <div class="service-info-row">
+          <strong>المدة:</strong>
+          <span id="serviceDuration">--</span> دقيقة
+        </div>
+        <div class="service-info-row">
+          <strong>السعر:</strong>
+          <span id="servicePrice">--</span> ج
+        </div>
+      </div>
+      
+      <!-- نوع الرصيد -->
+      <div class="form-group">
+        <label for="extraServiceBalanceType">💳 نوع الرصيد *</label>
+        <select id="extraServiceBalanceType" required>
+          <option value="">اختر نوع الرصيد</option>
+          <option value="رصيد أساسي">رصيد أساسي</option>
+          <option value="رصيد ليزر">رصيد ليزر</option>
+          <option value="رصيد بشرة">رصيد بشرة</option>
+        </select>
+      </div>
+      
+      <!-- تحذير الرصيد -->
+      <div id="balanceWarning" style="display: none;" class="balance-warning">
+        ⚠️ الرصيد غير كافي - سيتم إرسال تنبيه للاستقبال
+      </div>
+      
+      <button type="submit" class="btn btn-success" style="width: 100%;">
+        <span>➕</span>
+        إضافة الخدمة
+      </button>
+    </form>
+  </div>
+</div>
+
+  <!-- Modal: Skin Details -->
+  <div id="skinModal" class="modal">
+    <div class="modal-content" style="max-width: 500px;">
+      <div class="modal-header">
+        <h3>✨ تفاصيل العناية بالبشرة</h3>
+        <button class="modal-close" id="closeSkinModal">&times;</button>
+      </div>
+      
+      <form id="skinForm" class="modal-body">
+        <input type="hidden" id="skinServiceId">
+        <input type="hidden" id="skinServiceName">
+        <input type="hidden" id="skinServiceIndex">
+
+        <div class="form-group">
+          <label for="skinProductUsed">🧴 المنتج المستخدم *</label>
+          <input type="text" id="skinProductUsed" placeholder="اسم المنتج" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="skinQuantity">📦 الكمية *</label>
+          <input type="number" id="skinQuantity" min="1" step="0.1" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="skinNotes">📝 ملاحظات</label>
+          <textarea id="skinNotes" rows="3" placeholder="ملاحظات على الجلسة..."></textarea>
+        </div>
+        
+        <button type="submit" class="btn btn-success" style="width: 100%;">
+          <span>💾</span>
+          حفظ التفاصيل
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <script src="/doctorspace/doctorappo.js"></script>
+</body>
+</html>

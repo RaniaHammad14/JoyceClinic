@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>إدارة العملاء - Joyce Beauty Salon</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/bookings/clients.css">
+</head>
+<body>
+  <div class="bg-decoration"></div>
+  
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="brand">
+        <div class="logo-wrapper">
+          <img src="/assets/1.jpeg" alt="Joyce Salon Logo" class="logo" />
+        </div>
+        <div class="brand-text">
+          <h1>💅 Joyce Beauty </h1>
+          <p class="tagline">✨ إدارة العملاء</p>
+        </div>
+      </div>
+
+      <nav class="top-actions">
+        <a href="/Main/main.html" class="icon-btn">
+          <span>🏠</span>
+          الرئيسية
+        </a>
+        <a id="logoutLink" href="/login/login.html" class="icon-btn logout">
+          <span>🚪</span>
+          تسجيل خروج
+        </a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="welcome-section">
+      <div class="welcome-content">
+        <h2>إدارة العملاء 📇</h2>
+        <p class="lead">اختاري الإجراء المطلوب من الخيارات التالية</p>
+      </div>
+    </section>
+
+    <section class="main-cards">
+      <!-- كارت إضافة عميل جديد -->
+      <a href="/bookings/addnewclient.html" class="main-card">
+        <div class="card-icon" style="background: linear-gradient(135deg, #e91e63 0%, #f06292 100%)">
+          <span>👤➕</span>
+        </div>
+        <div class="card-content">
+          <h3>إضافة عميل جديد</h3>
+          <p class="small">تسجيل عميل جديد وشحن الرصيد</p>
+        </div>
+        <div class="card-arrow">←</div>
+      </a>
+
+      <!-- كارت إدارة العملاء الحاليين -->
+      <a href="/bookings/manageclients.html" class="main-card">
+        <div class="card-icon" style="background: linear-gradient(135deg, #9c27b0 0%, #ba68c8 100%)">
+          <span>📋</span>
+        </div>
+        <div class="card-content">
+          <h3>إدارة العملاء الحاليين</h3>
+          <p class="small">عرض وتعديل بيانات العملاء المسجلين</p>
+        </div>
+        <div class="card-arrow">←</div>
+      </a>
+    </section>
+
+    <footer class="page-footer">
+      <div class="footer-content">
+        <p>By Abdullah Taher</p>
+        <small>© 2025 Joyce Beauty Salon — جميع الحقوق محفوظة</small>
+      </div>
+    </footer>
+  </main>
+
+  <script src="/bookings/clients.js"></script>
+</body>
+</html>

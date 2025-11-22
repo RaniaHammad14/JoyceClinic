@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>المحاسب والخزنة - Joyce Beauty Salon</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/accountant/accountant.css">
+  <style>
+    /* Filter Section */
+    .filter-section {
+      background: #fafafa;
+      padding: 20px;
+      border-radius: var(--radius-sm);
+      margin-bottom: 20px;
+      border: 2px solid var(--border);
+    }
+
+    .filter-inputs {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    .filter-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .filter-group label {
+      font-weight: 600;
+      color: var(--text-dark);
+      font-size: 14px;
+    }
+
+    .filter-group input[type="date"] {
+      padding: 10px 14px;
+      border-radius: 8px;
+      border: 2px solid var(--border);
+      outline: none;
+      font-size: 14px;
+      font-family: inherit;
+      transition: all 0.3s ease;
+      background: white;
+    }
+
+    .filter-group input[type="date"]:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 4px rgba(233, 30, 99, 0.1);
+    }
+
+    .filter-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    @media (max-width: 768px) {
+      .filter-inputs {
+        grid-template-columns: 1fr;
+      }
+      
+      .filter-actions {
+        flex-direction: column;
+      }
+      
+      .filter-actions button {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-decoration"></div>
+  
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="brand">
+        <img src="/assets/1.jpeg" alt="Joyce Salon" class="logo" />
+        <div>
+          <h1>💰 المحاسب والخزنة</h1>
+          <p class="tagline">إدارة الإيرادات والمصروفات والعهد</p>
+        </div>
+      </div>
+      <nav class="top-actions">
+        <button id="saveDailyReportBtn" class="icon-btn primary">
+          <span>💾</span>
+          حفظ تقرير اليوم
+        </button>
+        <a href="/Main/main.html" class="icon-btn">
+          <span>🏠</span>
+          الرئيسية
+        </a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- معلومات المستخدم -->
+    <section class="user-section">
+      <div class="user-card">
+        <div class="user-avatar">👤</div>
+        <div class="user-details">
+          <strong id="userName">المستخدم</strong>
+          <span id="userRole" class="role-badge">الدور</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- إحصائيات الخزنة -->
+    <section class="treasury-stats">
+      <h2 class="section-title">
+        <span>📊</span>
+        رصيد الخزنة الحالي
+      </h2>
+      
+      <div class="stats-grid">
+        <div class="stat-card cash">
+          <div class="stat-icon">💵</div>
+          <div class="stat-content">
+            <div class="stat-label">نقدي</div>
+            <div class="stat-value" id="statCash">0.00 ج</div>
+          </div>
+        </div>
+        
+        <div class="stat-card wallet">
+          <div class="stat-icon">📱</div>
+          <div class="stat-content">
+            <div class="stat-label">محفظة</div>
+            <div class="stat-value" id="statWallet">0.00 ج</div>
+          </div>
+        </div>
+        
+        <div class="stat-card visa">
+          <div class="stat-icon">💳</div>
+          <div class="stat-content">
+            <div class="stat-label">فيزا</div>
+            <div class="stat-value" id="statVisa">0.00 ج</div>
+          </div>
+        </div>
+        
+        <div class="stat-card total">
+          <div class="stat-icon">💰</div>
+          <div class="stat-content">
+            <div class="stat-label">إجمالي الدخل</div>
+            <div class="stat-value" id="statTotal">0.00 ج</div>
+          </div>
+        </div>
+        
+        <div class="stat-card custodies">
+          <div class="stat-icon">🔄</div>
+          <div class="stat-content">
+            <div class="stat-label">عهد نشطة</div>
+            <div class="stat-value" id="statCustodies">0.00 ج</div>
+          </div>
+        </div>
+        
+        <div class="stat-card expenses">
+          <div class="stat-icon">📉</div>
+          <div class="stat-content">
+            <div class="stat-label">مصروفات</div>
+            <div class="stat-value" id="statExpenses">0.00 ج</div>
+          </div>
+        </div>
+        
+        <div class="stat-card available">
+          <div class="stat-icon">✅</div>
+          <div class="stat-content">
+            <div class="stat-label">الرصيد المتاح</div>
+            <div class="stat-value" id="statAvailable">0.00 ج</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- التبويبات -->
+    <section class="tabs-section">
+      <div class="tabs-header">
+        <button class="tab-btn active" data-tab="reports">
+          <span>📋</span>
+          التقارير المحفوظة
+        </button>
+        <button class="tab-btn" data-tab="custodies">
+          <span>🔄</span>
+          العهد
+        </button>
+        <button class="tab-btn" data-tab="expenses">
+          <span>📉</span>
+          المصروفات
+        </button>
+      </div>
+
+      <!-- محتوى التقارير -->
+      <div id="reportsTab" class="tab-content active">
+        <div class="filter-section">
+          <div class="filter-inputs">
+            <div class="filter-group">
+              <label>من تاريخ:</label>
+              <input type="date" id="filterStartDate" />
+            </div>
+            <div class="filter-group">
+              <label>إلى تاريخ:</label>
+              <input type="date" id="filterEndDate" />
+            </div>
+          </div>
+          <div class="filter-actions">
+            <button id="applyFilterBtn" class="icon-btn-sm primary">
+              <span>🔍</span>
+              بحث
+            </button>
+            <button id="clearFilterBtn" class="icon-btn-sm">
+              <span>✖</span>
+              مسح
+            </button>
+            <button id="refreshReportsBtn" class="icon-btn-sm">
+              <span>🔄</span>
+              تحديث
+            </button>
+          </div>
+        </div>
+        <div id="reportsList" class="content-list">
+          <div class="loading">⏳ جاري التحميل...</div>
+        </div>
+      </div>
+
+      <!-- محتوى العهد -->
+      <div id="custodiesTab" class="tab-content">
+        <div class="tab-actions">
+          <button id="addCustodyBtn" class="icon-btn-sm primary">
+            <span>➕</span>
+            إضافة عهدة جديدة
+          </button>
+          <button id="refreshCustodiesBtn" class="icon-btn-sm">
+            <span>🔄</span>
+            تحديث
+          </button>
+        </div>
+        <div id="custodiesList" class="content-list">
+          <div class="loading">⏳ جاري التحميل...</div>
+        </div>
+      </div>
+
+      <!-- محتوى المصروفات -->
+      <div id="expensesTab" class="tab-content">
+        <div class="tab-actions">
+          <button id="addExpenseBtn" class="icon-btn-sm primary">
+            <span>➕</span>
+            إضافة مصروف
+          </button>
+          <button id="refreshExpensesBtn" class="icon-btn-sm">
+            <span>🔄</span>
+            تحديث
+          </button>
+        </div>
+        <div id="expensesList" class="content-list">
+          <div class="loading">⏳ جاري التحميل...</div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Modal حفظ تقرير اليوم -->
+  <div id="saveDailyReportModal" class="modal" aria-hidden="true">
+    <div class="modal-backdrop"></div>
+    <div class="modal-inner">
+      <button class="close-btn" onclick="closeSaveDailyReportModal()">✖</button>
+      
+      <div class="modal-header">
+        <div class="modal-icon">💾</div>
+        <h3>حفظ تقرير يوم في الخزنة</h3>
+        <p class="modal-subtitle">سيتم جلب بيانات شيفتات اليوم تلقائياً</p>
+      </div>
+      
+      <div id="dailyReportSummary" class="summary-box">
+        <div class="loading">⏳ جاري جلب البيانات...</div>
+      </div>
+      
+      <div id="saveReportMessage" class="message" style="display: none;"></div>
+      
+      <div class="modal-actions">
+        <button class="btn-secondary" onclick="closeSaveDailyReportModal()">
+          <span>✖</span>
+          إلغاء
+        </button>
+        <button id="confirmSaveReportBtn" class="btn-primary">
+          <span>💾</span>
+          حفظ في الخزنة
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal إضافة عهدة -->
+  <div id="addCustodyModal" class="modal" aria-hidden="true">
+    <div class="modal-backdrop"></div>
+    <div class="modal-inner">
+      <button class="close-btn" onclick="closeAddCustodyModal()">✖</button>
+      
+      <div class="modal-header">
+        <div class="modal-icon">🔄</div>
+        <h3>إضافة عهدة جديدة</h3>
+      </div>
+      
+      <form id="custodyForm" class="form">
+        <div class="form-group">
+          <label>اسم الشخص <span class="required">*</span></label>
+          <input type="text" id="custodyPersonName" placeholder="أدخل اسم الشخص" required />
+        </div>
+        
+        <div class="form-group">
+          <label>المبلغ <span class="required">*</span></label>
+          <input type="number" id="custodyAmount" placeholder="0.00" step="0.01" min="0" required />
+        </div>
+        
+        <div class="form-group">
+          <label>السبب (اختياري)</label>
+          <textarea id="custodyReason" rows="2" placeholder="أدخل سبب العهدة"></textarea>
+        </div>
+        
+        <div id="custodyMessage" class="message" style="display: none;"></div>
+        
+        <div class="modal-actions">
+          <button type="button" class="btn-secondary" onclick="closeAddCustodyModal()">
+            <span>✖</span>
+            إلغاء
+          </button>
+          <button type="submit" class="btn-primary">
+            <span>💾</span>
+            حفظ العهدة
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal إضافة مصروف -->
+  <div id="addExpenseModal" class="modal" aria-hidden="true">
+    <div class="modal-backdrop"></div>
+    <div class="modal-inner">
+      <button class="close-btn" onclick="closeAddExpenseModal()">✖</button>
+      
+      <div class="modal-header">
+        <div class="modal-icon">📉</div>
+        <h3>إضافة مصروف</h3>
+      </div>
+      
+      <form id="expenseForm" class="form">
+        <div class="form-group">
+          <label>المبلغ <span class="required">*</span></label>
+          <input type="number" id="expenseAmount" placeholder="0.00" step="0.01" min="0" required />
+        </div>
+        
+        <div class="form-group">
+          <label>السبب <span class="required">*</span></label>
+          <input type="text" id="expenseReason" placeholder="أدخل سبب المصروف" required />
+        </div>
+        
+        <div class="form-group">
+          <label>أُخذ بواسطة (اختياري)</label>
+          <input type="text" id="expenseTakenBy" placeholder="اسم الشخص" />
+        </div>
+        
+        <div id="expenseMessage" class="message" style="display: none;"></div>
+        
+        <div class="modal-actions">
+          <button type="button" class="btn-secondary" onclick="closeAddExpenseModal()">
+            <span>✖</span>
+            إلغاء
+          </button>
+          <button type="submit" class="btn-primary">
+            <span>💾</span>
+            حفظ المصروف
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="/accountant/accountant.js"></script>
+</body>
+</html>
