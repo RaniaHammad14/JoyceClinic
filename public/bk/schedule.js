@@ -173,17 +173,24 @@ async function loadSchedule() {
     // ⭐ تحديث مهم: جلب الخدمات لكل حجز من جدول booking_services
     for (let booking of newBookings) {
       try {
-        const servicesResponse = await fetch(`/api/bookings/${booking.id}/services`);
+        const servicesResponse = await fetch(
+          `/api/bookings/${booking.id}/services`,
+          { cache: "no-store" } // 🔥 prevents stale services
+        );
+
         if (servicesResponse.ok) {
           const servicesData = await servicesResponse.json();
           booking.booking_services = servicesData.services || [];
+        } else {
+          console.warn(`⚠️ Failed to load services for booking ${booking.id}`);
+          booking.booking_services = booking.booking_services || [];
         }
       } catch (error) {
-        console.warn(`⚠️ لا يمكن جلب خدمات الحجز ${booking.id}:`, error);
-        booking.booking_services = [];
+        console.warn(`⚠️ Cannot fetch services for booking ${booking.id}:`, error);
+        booking.booking_services = booking.booking_services || [];
       }
     }
-    
+
     bookings = newBookings;
 
     // فحص الخدمات الغير مدفوعة
@@ -1117,102 +1124,98 @@ async function openAddServiceToBookingModalInstant(booking) {
   }
   
   // إرسال النموذج
-  document.getElementById('addServiceInstantForm').addEventListener('submit', async (e) => {
-    e.preventDefault();
-    
-    const serviceId = document.getElementById('instantServiceSelect').value;
-    const balanceType = document.getElementById('instantBalanceType').value;
-    const selectedOption = document.getElementById('instantServiceSelect').options[document.getElementById('instantServiceSelect').selectedIndex];
-    
-    if (!serviceId || !balanceType) {
-      alert('⚠️ الرجاء ملء جميع البيانات');
-      return;
-    }
-    
-    const price = parseFloat(selectedOption.dataset.price);
-    const serviceName = selectedOption.textContent;
-    const duration = parseInt(document.getElementById('instantServiceDuration').value);
-    
-    // ⭐ التحقق من الرصيد
-    const data = window.currentClientData || clientData || booking;
-    const balanceMap = {
-      'رصيد أساسي': data.balance_basic,
-      'رصيد ليزر': data.balance_laser,
-      'رصيد بشرة': data.balance_skin
-    };
-    
-    const currentBalance = parseFloat(balanceMap[balanceType] || 0);
-    
-    if (currentBalance < price) {
-      alert(
-        `⚠️ الرصيد غير كافي!\n\n` +
-        `💰 الرصيد الحالي: ${currentBalance.toFixed(2)} ج\n` +
-        `💸 السعر المطلوب: ${price.toFixed(2)} ج\n\n` +
-        `الرجاء شحن رصيد العميل أولاً`
-      );
-      return;
-    }
-    
-    const confirmAdd = confirm(
-      `⚡ تأكيد الخصم الفوري\n\n` +
-      `📋 الخدمة: ${serviceName}\n` +
-      `💰 السعر: ${price.toFixed(2)} ج\n` +
-      `💳 من: ${balanceType}\n\n` +
-      `✅ سيتم الخصم فوراً - هل تريد المتابعة؟`
-    );
-    
-    if (!confirmAdd) return;
-    
-    try {
-      const loadingOverlay = document.getElementById('loadingOverlay');
-      if (loadingOverlay) loadingOverlay.style.display = 'flex';
-      
-      const response = await fetch(`/api/bookings/${booking.id}/add-service-instant`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          service_id: serviceId,
-          service_name: serviceName,
-          duration: duration,
-          price: price,
-          balance_type: balanceType,
-          client_id: booking.client_id,
-          skip_shift_action: true
-        })
-      });
-      
-      const result = await response.json();
-      
-      if (!response.ok) {
-        alert('⚠️ ' + result.message);
-        if (loadingOverlay) loadingOverlay.style.display = 'none';
-        return;
-      }
-      
-// بعد نجاح الإضافة في openAddServiceToBookingModalInstant:
-alert('✅ ' + result.message);
+ document.getElementById("addServiceInstantForm").addEventListener("submit", async (e) => {
+   e.preventDefault();
 
-// ⭐ تحديث بيانات الحجز محلياً مع الخدمات الجديدة
-if (result.all_services) {
-  booking.booking_services = result.all_services;
-  booking.total_price = result.new_total_price;
-  
-  // تحديث الكرت مباشرة
-  updateBookingCard(booking);
-}
+   const serviceId = document.getElementById("instantServiceSelect").value;
+   const balanceType = document.getElementById("instantBalanceType").value;
+   const selectedOption = document.getElementById("instantServiceSelect").options[document.getElementById("instantServiceSelect").selectedIndex];
 
-closeModal(modal);
-await loadSchedule(); // إعادة تحميل للتأكد
-      
-      if (loadingOverlay) loadingOverlay.style.display = 'none';
-      
-    } catch (error) {
-      console.error('❌ خطأ:', error);
-      alert('⚠️ حدث خطأ');
-      const loadingOverlay = document.getElementById('loadingOverlay');
-      if (loadingOverlay) loadingOverlay.style.display = 'none';
-    }
-  });
+   if (!serviceId || !balanceType) {
+     alert("⚠️ الرجاء ملء جميع البيانات");
+     return;
+   }
+
+   const price = parseFloat(selectedOption.dataset.price);
+   const serviceName = selectedOption.textContent;
+   const duration = parseInt(document.getElementById("instantServiceDuration").value);
+
+   // ⭐ CHECK BALANCE
+   const data = window.currentClientData || clientData || booking;
+   const balanceMap = {
+     "رصيد أساسي": data.balance_basic,
+     "رصيد ليزر": data.balance_laser,
+     "رصيد بشرة": data.balance_skin,
+   };
+
+   const currentBalance = parseFloat(balanceMap[balanceType] || 0);
+
+   if (currentBalance < price) {
+     alert(`⚠️ الرصيد غير كافي!`);
+     return;
+   }
+
+   const confirmAdd = confirm(
+     `⚡ تأكيد الخصم الفوري\n\n` + `📋 الخدمة: ${serviceName}\n` + `💰 السعر: ${price.toFixed(2)} ج\n` + `💳 من: ${balanceType}\n\n`
+   );
+
+   if (!confirmAdd) return;
+
+   try {
+     const loadingOverlay = document.getElementById("loadingOverlay");
+     if (loadingOverlay) loadingOverlay.style.display = "flex";
+
+     const response = await fetch(`/api/bookings/${booking.id}/add-service-instant`, {
+       method: "POST",
+       headers: { "Content-Type": "application/json" },
+       body: JSON.stringify({
+         service_id: serviceId,
+         service_name: serviceName,
+         duration: duration,
+         price: price,
+         balance_type: balanceType,
+         client_id: booking.client_id,
+         skip_shift_action: true,
+       }),
+     });
+
+     const result = await response.json();
+
+     if (!response.ok) {
+       alert("⚠️ " + result.message);
+       if (loadingOverlay) loadingOverlay.style.display = "none";
+       return;
+     }
+
+     alert("✅ " + result.message);
+
+     // ⭐ UPDATE BOOKING DATA LOCALLY
+     if (result.all_services) {
+       booking.booking_services = result.all_services;
+       booking.total_price = result.new_total_price;
+
+       // ⭐ UPDATE BOOKING CARD PROPERLY
+       const oldCard = document.getElementById(`booking-card-${booking.id}`);
+       if (oldCard) oldCard.remove();
+
+       const updatedCard = createBookingCard(booking);
+       updatedCard.id = `booking-card-${booking.id}`;
+
+       const slot = document.querySelector(`[data-booking-id="${booking.id}"]`);
+       if (slot) slot.appendChild(updatedCard);
+     }
+
+     closeModal(modal);
+
+     if (loadingOverlay) loadingOverlay.style.display = "none";
+   } catch (error) {
+     console.error("❌ خطأ:", error);
+     alert("⚠️ حدث خطأ");
+     const loadingOverlay = document.getElementById("loadingOverlay");
+     if (loadingOverlay) loadingOverlay.style.display = "none";
+   }
+ });
+
   
   document.getElementById('closeAddServiceInstantModal').addEventListener('click', () => {
     closeModal(modal);

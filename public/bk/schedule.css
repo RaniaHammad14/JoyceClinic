@@ -27,7 +27,8 @@
   padding: 0;
 }
 
-html, body {
+html,
+body {
   height: 100%;
   background: var(--bg-gradient);
   color: var(--text-dark);
@@ -51,8 +52,7 @@ a {
   left: 0;
   width: 100%;
   height: 100%;
-  background: 
-    radial-gradient(circle at 20% 20%, rgba(233, 30, 99, 0.05) 0%, transparent 50%),
+  background: radial-gradient(circle at 20% 20%, rgba(233, 30, 99, 0.05) 0%, transparent 50%),
     radial-gradient(circle at 80% 80%, rgba(156, 39, 176, 0.05) 0%, transparent 50%);
   pointer-events: none;
   z-index: 0;
@@ -194,7 +194,7 @@ a {
 }
 
 .doctor-header-card::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   right: 0;
@@ -949,7 +949,9 @@ a {
 }
 
 @keyframes spin {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .loading-overlay p {
@@ -994,7 +996,7 @@ a {
   border-radius: 16px;
   font-size: 18px;
   font-weight: 600;
-  font-family: 'Cairo', sans-serif;
+  font-family: "Cairo", sans-serif;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -1075,7 +1077,7 @@ a {
   border-radius: 16px;
   font-size: 18px;
   font-weight: 600;
-  font-family: 'Cairo', sans-serif;
+  font-family: "Cairo", sans-serif;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -1197,7 +1199,7 @@ a {
 
 .btn-quick-adjust:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .btn-quick-adjust:active {
@@ -1230,11 +1232,11 @@ a {
   .controls-section {
     grid-template-columns: 1fr;
   }
-  
+
   .add-booking-btn {
     width: 100%;
   }
-  
+
   .bookings-grid {
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   }
@@ -1245,38 +1247,38 @@ a {
     flex-direction: column;
     align-items: stretch;
   }
-  
+
   .brand {
     justify-content: center;
   }
-  
+
   .top-actions {
     justify-content: center;
   }
-  
+
   .container {
     padding: 0 16px;
     margin: 20px auto;
   }
-  
+
   .doctor-header-card {
     flex-direction: column;
     text-align: center;
     padding: 24px;
   }
-  
+
   .stats-section {
     grid-template-columns: repeat(2, 1fr);
   }
-  
+
   .bookings-grid {
     grid-template-columns: 1fr;
   }
-  
+
   .form-row {
     grid-template-columns: 1fr;
   }
-  
+
   .balance-grid {
     grid-template-columns: 1fr;
   }
@@ -1286,124 +1288,125 @@ a {
   .brand-text h1 {
     font-size: 18px;
   }
-  
+
   .logo {
     width: 52px;
     height: 52px;
   }
-  
+
   .doctor-details-large h2 {
     font-size: 22px;
   }
-  
+
   .doctor-avatar-large {
     width: 80px;
     height: 80px;
     min-width: 80px;
     font-size: 40px;
   }
-  
+
   .icon-btn {
     padding: 10px 16px;
     font-size: 14px;
   }
-  
+
   .stats-section {
     grid-template-columns: 1fr;
   }
-  
+
   .modal-actions {
     flex-direction: column;
   }
-  
+
   .btn {
     width: 100%;
     justify-content: center;
   }
 }
 .quick-adjust-buttons {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 8px;
-    margin: 15px 0;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 8px;
+  margin: 15px 0;
 }
 
 .btn-quick-adjust {
-    padding: 8px 4px;
-    border: none;
-    border-radius: 6px;
-    font-size: 12px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.2s ease;
+  padding: 8px 4px;
+  border: none;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
 }
 
 .btn-quick-adjust.increase {
-    background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
-    color: #065f46;
-    border: 1px solid #10b981;
+  background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+  color: #065f46;
+  border: 1px solid #10b981;
 }
 
 .btn-quick-adjust.decrease {
-    background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
-    color: #991b1b;
-    border: 1px solid #ef4444;
+  background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+  color: #991b1b;
+  border: 1px solid #ef4444;
 }
 
 .btn-quick-adjust:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .price-preview {
-    background: #f8fafc;
-    padding: 15px;
-    border-radius: 8px;
-    border: 1px solid #e2e8f0;
-    margin: 15px 0;
+  background: #f8fafc;
+  padding: 15px;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  margin: 15px 0;
 }
 /* أضف هذا CSS في ملف الأنماط الخاص بك */
 .quick-adjust-buttons {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 8px;
-    margin: 15px 0;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 8px;
+  margin: 15px 0;
 }
 
 .btn-quick-adjust {
-    padding: 8px 4px;
-    border: none;
-    border-radius: 6px;
-    font-size: 12px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.2s ease;
+  padding: 8px 4px;
+  border: none;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
 }
 
 .btn-quick-adjust.increase {
-    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-    color: white;
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: white;
 }
 
 .btn-quick-adjust.decrease {
-    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
-    color: white;
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+  color: white;
 }
 
 .btn-quick-adjust:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .price-preview {
-    background: #f8fafc;
-    padding: 15px;
-    border-radius: 8px;
-    border: 1px solid #e2e8f0;
-    margin: 15px 0;
+  background: #f8fafc;
+  padding: 15px;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  margin: 15px 0;
 }
 @keyframes alertPulse {
-  0%, 100% {
+  0%,
+  100% {
     box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.7);
   }
   50% {
@@ -1412,7 +1415,8 @@ a {
 }
 
 @keyframes pulse {
-  0%, 100% {
+  0%,
+  100% {
     transform: scale(1);
     opacity: 1;
   }
@@ -1429,4 +1433,11 @@ a {
 .btn-info:hover {
   transform: translateY(-2px);
   box-shadow: var(--shadow-md);
+}
+#addBookingModal {
+  pointer-events: none;
+}
+
+#addBookingModal .modal-content {
+  pointer-events: auto;
 }
